@@ -1,0 +1,23 @@
+{
+    "sections":[
+        {"id": 0, "subject": "math", "level": "intermediate", "timeBlockId": 0, "days": "MWF", "studentIds": [0,4,5,7,6,3], "teacherId": 5},
+        {"id": 1, "subject": "math", "level": "intermediate", "timeBlockId": 2, "days": "MWF", "studentIds": [0,4,5,7,6,3], "teacherId": 2},
+        {"id": 2, "subject": "math", "level": "intermediate", "timeBlockId": 1, "days": "MWF", "studentIds": [0,4,5,7,6,3], "teacherId": 1}
+    ],
+    "students":[
+        {"id": 0, "name": "Bob", "subject_rankings": {"math": 2, "english": 8, "asl": 4}, "sectionIds": [0,2,1,6,3]},
+        {"id": 1, "name": "Fredrick", "subject_rankings": {"math": 9, "english": 3, "asl": 4}, "sectionIds": [4,2,9,6,3]},
+        {"id": 2, "name": "Shaw", "subject_rankings": {"math": 6, "english": 2, "asl": 9}, "sectionIds": [0,7,1,8,3]}
+    ],
+    "teachers":[
+        {"id": 0, "name": "Bartholomew", "subjects": {"math": 1, "english": -1, "writing": 0}, "sectionIds": [0,7,1,6,3], "is_mentor": false},
+        {"id": 1, "name": "Stillman", "subjects": {"math": 1, "english": -1, "writing": 0, "asl": 0}, "sectionIds": [0,7,1,6,3], "is_mentor": false},
+        {"id": 2, "name": "Brune", "subjects": {"reading": 1, "math": 1, "asl": -1}, "sectionIds": [0,7,1,6,3], "is_mentor": true}
+    ],
+    "timeBlock":[
+        {"id": 0, "start": "08:00", "end": "09:15"},
+        {"id": 1, "start": "10:15", "end": "10:45"},
+        {"id": 2, "start": "10:45", "end": "11:45"},
+        {"id": 3, "start": "14:00", "end": "15:00"}
+    ]
+}
