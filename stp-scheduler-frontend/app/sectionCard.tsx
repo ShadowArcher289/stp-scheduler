@@ -8,7 +8,7 @@ export default function Section(
     teacherId: number
 ){
     return(
-        <div>
+        <div className="col-span-1 row-span-1 border-2 border-dotted">
             Hello, I am a section and here are my attributes
             {id} {subject} {level} {timeBlockId} {days} {studentIds} {teacherId}
         </div>
