@@ -66,7 +66,6 @@ function groupSections(sections: any[]): Record<string, SectionProps[]> {
       grouped[key].push(section); // sets the section to a key
     });
   });
-  console.log(grouped);
   return grouped;
 }
 
@@ -120,16 +119,16 @@ export default function Home() {
       <div id="schedule" className="grid grid-cols-6 grid-rows-12 grid-flow-dense w-auto border-2 border-solid">
         
         {/* Headers */}
-        <h4 className="col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">Time</h4>
-        <h4 className="col-start-2 col-span-1 bg-stone-300 text-black border-2 border-white">Monday</h4>
-        <h4 className="col-start-3 col-span-1 bg-stone-300 text-black border-2 border-white">Tuesday</h4>
-        <h4 className="col-start-4 col-span-1 bg-stone-300 text-black border-2 border-white">Wednesday</h4>
-        <h4 className="col-start-5 col-span-1 bg-stone-300 text-black border-2 border-white">Thursday</h4>
-        <h4 className="col-start-6 col-span-1 bg-stone-300 text-black border-2 border-white">Friday</h4>
+        <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">Time</h4>
+        <h4 className="flex justify-center items-center col-start-2 col-span-1 bg-stone-300 text-black border-2 border-white">Monday</h4>
+        <h4 className="flex justify-center items-center col-start-3 col-span-1 bg-stone-300 text-black border-2 border-white">Tuesday</h4>
+        <h4 className="flex justify-center items-center col-start-4 col-span-1 bg-stone-300 text-black border-2 border-white">Wednesday</h4>
+        <h4 className="flex justify-center items-center col-start-5 col-span-1 bg-stone-300 text-black border-2 border-white">Thursday</h4>
+        <h4 className="flex justify-center items-center col-start-6 col-span-1 bg-stone-300 text-black border-2 border-white">Friday</h4>
 
         {/* Fill in the time on the left */}
         {localData.timeBlock.map(time => (
-          <div key={time.id} className="p-3 col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
+          <div key={time.id} className="flex justify-center items-center p-3 col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
         ))}
 
 
