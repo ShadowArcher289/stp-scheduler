@@ -1,49 +1,118 @@
 import localData from "../data/SchedulerData.json";
-import Section from "./sectionCard"
+import Section from "./sectionCard";
 
-const times = [ // unused
-    { id: 0, hour: '08', timeOfDay: "am"},
-    { id: 1, hour: '09', timeOfDay: "am"},
-    { id: 2, hour: '10', timeOfDay: "am"},
-    { id: 3, hour: '11', timeOfDay: "am"},
-    { id: 4, hour: '12', timeOfDay: "pm"},
-    { id: 5, hour: '01', timeOfDay: "pm"},
-    { id: 6, hour: '02', timeOfDay: "pm"},
-    { id: 7, hour: '03', timeOfDay: "pm"},
-    { id: 8, hour: '04', timeOfDay: "pm"},
-    { id: 9, hour: '05', timeOfDay: "pm"},
-  ];
+/**
+ * Author: Addison A
+ * Modified By: 
+ * Last Updated: 12/15/2025
+ */
 
-  /**
-   * The number of sections in the grid.
-   */
-  var SectionCount = localData.sections.length;
+/**
+ * The number of sections in the grid
+ */
+var SectionCount = 0;
 
-  /**
-   * Converts time from military time(ex: 13:00) to civilian time(ex: 1:00pm)
-   * @param time string
-   * @returns string
-   */
-  function militaryToCivilianTime(time: string): string{
-    var splitTime = time.split(":");
-    var suffix = "am";
-    if(parseInt(splitTime[0]) > 12){
-      splitTime[0] = (parseInt(splitTime[0]) - 12).toString();
-      suffix = "pm";
+/**
+ * Converts time from military time(ex: 13:00) to civilian time(ex: 1:00pm)
+ * @param time string
+ * @returns string
+ */
+function militaryToCivilianTime(time: string): string{
+  var splitTime = time.split(":");
+  var suffix = "am";
+  if(parseInt(splitTime[0]) > 12){
+    splitTime[0] = (parseInt(splitTime[0]) - 12).toString();
+    suffix = "pm";
+  }
+  return splitTime.join(":") + suffix;
+}
+
+
+/**
+ * Increments the SectionCount by 1
+ */
+function incrementSectionCountCount(): void{
+  SectionCount++;
+}
+
+/**
+ * Resets the SectionCount to 0
+ */
+function resetSectionCount(){
+  SectionCount = 0;
+}
+
+/**
+ * Returns the number of unused cells in the grid
+ * @returns number
+ */
+function getEmptySpacesCount(): number{
+  return 55 - SectionCount;
+}
+
+/**
+ * Groups the given sections into a Record by each day's timeBlock
+ * @param sections 
+ * @returns Record<string, SectionProps[]>
+ */
+function groupSections(sections: any[]): Record<string, SectionProps[]> {
+  const grouped: Record<string, SectionProps[]> = {};
+  sections.forEach(section => {
+    section.days.forEach((day: string) => { // creates a key for each day's timeBlock present in the section list.
+      const key = `${day}-${section.timeBlockId}`;
+      if (!grouped[key]){
+        grouped[key] = [];
+      }
+      grouped[key].push(section); // sets the section to a key
+    });
+  });
+  console.log(grouped);
+  return grouped;
+}
+
+/**
+ * Returns the column number that corresponds to a given day
+ * @param day string (ex: 'M' for Monday, 'W' for Wednesday, 'R' for Thursday)
+ * @returns number
+ */
+function getStartColumn(day: string): number{
+    var column = 7; // the default column is, column 7, the buffer
+
+    switch (day) { // set the column based on the given day
+        case "M":
+            column = 2;
+            break;
+        case "T":
+            column = 3;
+            break;
+        case "W":
+            column = 4;
+            break;
+        case "R":
+            column = 5;
+            break;
+        case "F":
+            column = 6;
+            break;
+        default:
+            console.log("getStartColumn in sectionCard.tsx: failed to calculate column");
+            break;
     }
-    return splitTime.join(":") + suffix;
-  }
+    return column;
+}
 
-  /**
-   * Returns the number of empty spaces in the grid.
-   * @returns number
-   */
-  function getEmptySpacesCount(): number{
-    return 41 - SectionCount;
-  }
+/**
+ * Returns the respective row number for a given timeBlock.
+ * @param timeBlockId id of the timeBlock for a given section
+ * @returns number
+ */
+function getStartRow(timeBlockId: number){
+    return timeBlockId + 2;
+}
 
 export default function Home() {
-  SectionCount = localData.sections.length;
+  const groupedSections = groupSections(localData.sections);
+  resetSectionCount();
   return (
     // table to put all the sections in the day
     // Sections to put in each table that require data to display
@@ -63,11 +132,31 @@ export default function Home() {
           <div key={time.id} className="p-3 col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
         ))}
 
-        {/* Fill in sections */}
-        {localData.sections.map((section, index) => (
-          <Section key={index} id={section.id} subject={section.subject} level={section.level} timeBlockId={section.timeBlockId} days={section.days} studentIds={section.studentIds} teacherId={section.teacherId}></Section>
-        ))}
 
+        {/* Create & Fill Cells with Sections */}
+        {Object.entries(groupedSections).map(([key, sections]) => {
+          incrementSectionCountCount();
+          const [day, timeBlockId] = key.split("-");
+          return (
+            <div
+              key={key}
+              className="col-span-1 row-span-1 border-2 border-dotted p-2 flex flex-col gap-2 text-center"
+              style={{
+                gridColumnStart: getStartColumn(day),
+                gridColumnEnd: `span 1`,
+                gridRowStart: getStartRow(parseInt(timeBlockId)),
+                gridRowEnd: `span 1`
+              }}
+            >
+              {sections.map((section, index) => (
+                <Section key={index} id={section.id} subject={section.subject} level={section.level} timeBlockId={section.timeBlockId} days={section.days} studentIds={section.studentIds} teacherId={section.teacherId}></Section>
+              ))}
+            </div>
+          );
+        })}
+
+
+        {/* Fill in empty spaces */}
         {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
           <div key={index} className="col-span-1 row-span-1 border-2 border-dotted p-6 text-center"></div>
         ))}
