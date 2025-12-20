@@ -31,7 +31,7 @@ function militaryToCivilianTime(time: string): string{
 /**
  * Increments the SectionCount by 1
  */
-function incrementSectionCountCount(): void{
+function incrementSectionCount(): void{
   SectionCount++;
 }
 
@@ -134,7 +134,7 @@ export default function Home() {
 
         {/* Create & Fill Cells with Sections */}
         {Object.entries(groupedSections).map(([key, sections]) => {
-          incrementSectionCountCount();
+          incrementSectionCount();
           const [day, timeBlockId] = key.split("-");
           return (
             <div
