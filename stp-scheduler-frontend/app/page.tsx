@@ -1,5 +1,6 @@
 import localData from "../data/SchedulerData.json";
 import Section from "./sectionCard";
+import InputPage from "./InputPage";
 
 /**
  * Author: Addison A
@@ -115,9 +116,10 @@ export default function Home() {
   return (
     // table to put all the sections in the day
     // Sections to put in each table that require data to display
-    <section className="flex min-h-screen items-center justify-center p-12 bg-zinc-50 font-sans dark:bg-black">
+    <section className="min-h-screen items-center justify-center p-12 bg-zinc-50 font-sans dark:bg-black">
+      <InputPage path={"../data/InputTestData.json" } jsonData={JSON.stringify(localData)}></InputPage>
+
       <div id="schedule" className="grid grid-cols-6 grid-rows-12 grid-flow-dense w-auto border-2 border-solid">
-        
         {/* Headers */}
         <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">Time</h4>
         <h4 className="flex justify-center items-center col-start-2 col-span-1 bg-stone-300 text-black border-2 border-white">Monday</h4>
