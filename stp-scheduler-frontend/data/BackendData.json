@@ -5,7 +5,7 @@
             "subject": "english",
             "level": 0,
             "timeBlockId": 1,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "eb859c01-e14e-4252-b318-6c6fbd62253b",
             "studentIds": [
             "860da037-006b-4de4-9233-9e0b060649e0",
@@ -21,7 +21,7 @@
             "subject": "english",
             "level": 1,
             "timeBlockId": 3,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "b589b42f-252d-41f5-b539-0a42b5959e95",
             "studentIds": [
             "1aeefe9d-4908-4ed5-bd63-0041a6b8cb53",
@@ -35,7 +35,7 @@
             "subject": "english",
             "level": 1,
             "timeBlockId": 2,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "eb859c01-e14e-4252-b318-6c6fbd62253b",
             "studentIds": [
             "b181fba9-2a4a-4c8d-8f49-e420ac068520",
@@ -50,7 +50,7 @@
             "subject": "english",
             "level": 2,
             "timeBlockId": 0,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "b589b42f-252d-41f5-b539-0a42b5959e95",
             "studentIds": [
             "f9535f67-edaf-4901-b6a7-33fdc99aea14",
@@ -64,7 +64,7 @@
             "subject": "english",
             "level": 2,
             "timeBlockId": 3,
-            "days": ["T", "R"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "eb859c01-e14e-4252-b318-6c6fbd62253b",
             "studentIds": [
             "258b3f18-5954-43a4-b471-dbbc0b94e6f9",
@@ -78,7 +78,7 @@
             "subject": "math",
             "level": 0,
             "timeBlockId": 5,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "deed5fbd-c0d4-4067-a9ad-771291f306af",
             "studentIds": [
             "296598f5-26cf-4c9a-bd38-ac5b8d725e5f",
@@ -91,7 +91,7 @@
             "subject": "math",
             "level": 1,
             "timeBlockId": 2,
-            "days": ["T", "R"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "cf90e526-0f27-4a61-85bb-ce25e624e990",
             "studentIds": [
             "1aeefe9d-4908-4ed5-bd63-0041a6b8cb53",
@@ -105,7 +105,7 @@
             "subject": "math",
             "level": 1,
             "timeBlockId": 0,
-            "days": ["T", "R"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "deed5fbd-c0d4-4067-a9ad-771291f306af",
             "studentIds": [
             "b181fba9-2a4a-4c8d-8f49-e420ac068520",
@@ -119,7 +119,7 @@
             "subject": "math",
             "level": 2,
             "timeBlockId": 3,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "cf90e526-0f27-4a61-85bb-ce25e624e990",
             "studentIds": [
             "f9535f67-edaf-4901-b6a7-33fdc99aea14",
@@ -135,7 +135,7 @@
             "subject": "math",
             "level": 2,
             "timeBlockId": 4,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "deed5fbd-c0d4-4067-a9ad-771291f306af",
             "studentIds": [
             "319f21e3-5a93-4b74-8cfc-cec10e64597a",
@@ -151,7 +151,7 @@
             "subject": "asl",
             "level": 0,
             "timeBlockId": 4,
-            "days": ["T", "R"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "532dd432-3cc7-482f-aef8-8df7fcd0e14c",
             "studentIds": [
             "6efcf289-d8d4-4e9b-bf6d-fa9cdd1dbb8d",
@@ -165,7 +165,7 @@
             "subject": "asl",
             "level": 0,
             "timeBlockId": 2,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "532dd432-3cc7-482f-aef8-8df7fcd0e14c",
             "studentIds": [
             "258b3f18-5954-43a4-b471-dbbc0b94e6f9",
@@ -179,7 +179,7 @@
             "subject": "asl",
             "level": 1,
             "timeBlockId": 0,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "532dd432-3cc7-482f-aef8-8df7fcd0e14c",
             "studentIds": [
             "79081200-777a-4917-86e9-9f490de14282",
@@ -196,7 +196,7 @@
             "subject": "asl",
             "level": 2,
             "timeBlockId": 1,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "532dd432-3cc7-482f-aef8-8df7fcd0e14c",
             "studentIds": [
             "1aeefe9d-4908-4ed5-bd63-0041a6b8cb53",
@@ -210,7 +210,7 @@
             "subject": "asl",
             "level": 2,
             "timeBlockId": 3,
-            "days": ["M", "W", "F"],
+            "days": ["M", "T", "W", "R", "F"],
             "teacherId": "532dd432-3cc7-482f-aef8-8df7fcd0e14c",
             "studentIds": [
             "8f71bd3f-d24c-479e-ae9e-f8ef3c5f473d",
@@ -664,15 +664,11 @@
     ],
     "timeBlock":[
         {"id": 0, "start": "08:00", "end": "09:00"},
-        {"id": 1, "start": "09:00", "end": "09:15"},
-        {"id": 2, "start": "09:15", "end": "10:15"},
-        {"id": 3, "start": "10:15", "end": "10:45"},
-        {"id": 4, "start": "10:45", "end": "11:45"},
-        {"id": 5, "start": "11:45", "end": "12:45"},
-        {"id": 6, "start": "12:45", "end": "13:45"},
-        {"id": 7, "start": "13:45", "end": "14:00"},
-        {"id": 8, "start": "14:00", "end": "15:00"},
-        {"id": 9, "start": "15:00", "end": "15:30"},
-        {"id": 10, "start": "15:30", "end": "16:30"}
+        {"id": 1, "start": "09:15", "end": "10:15"},
+        {"id": 2, "start": "10:30", "end": "11:30"},
+        {"id": 3, "start": "11:45", "end": "12:45"},
+        {"id": 4, "start": "12:45", "end": "13:45"},
+        {"id": 5, "start": "13:45", "end": "14:45"},
+        {"id": 6, "start": "15:00", "end": "16:00"}
     ]
 }
