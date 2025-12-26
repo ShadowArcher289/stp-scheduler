@@ -1,9 +1,10 @@
-import localData from "../data/SchedulerData.json";
+import localData from "../data/BackendData.json";
 
 /**
  * Author: Addison A
- * Modified By: 
- * Last Updated: 12/15/2025
+ * Last Updated: 12/26/2025
+ * 
+ * Editors: 
  */
 
 /**
@@ -25,6 +26,23 @@ function getBackgroundColor(subject: string){
     }
 }
 
+/**
+ * Given an array of teachers and a teacher's id, returns the name of a specified teacher.
+ * @param teachers Array of Teachers
+ * @param teacherId Id of the desired teacher
+ * @returns string
+ */
+function getTeacherName(teachers: Array<TeacherProps>, teacherId: string): string{
+    const match = teachers.find(teacher => teacher.id === teacherId); // find the matching teacher
+
+    if(match){ // if not unidentified, then return the name
+        return match.name;
+    }
+    else{
+        return "";
+    }
+}
+
 export default function Section({
     id, 
     subject, 
@@ -41,7 +59,7 @@ export default function Section({
                 backgroundColor: getBackgroundColor(subject),
             }}
         >
-            {localData.teachers[teacherId].name} - {subject}
+            {getTeacherName(localData.teachers as Array<TeacherProps>, teacherId)} - {subject}
         </div>
     );
 }

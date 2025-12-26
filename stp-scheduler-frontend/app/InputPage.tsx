@@ -3,6 +3,14 @@
 // import * as fs from 'fs';
 import { useState } from 'react';
 
+/**
+ * Author: Addison A
+ * Last Updated: 12/26/2025
+ * 
+ * Editors: 
+ */
+
+
 interface InputPageProps {
     path: string;
     jsonData: string;
@@ -28,7 +36,7 @@ export default function InputPage({path, jsonData}: InputPageProps){
     
     return(
         <div>
-            <p>New Data Input:</p>
+            <p>New Data Input: (Unimplemented)</p>
             <input type='text' id="newData" value={newData} className="border-2 p-2" onChange={(e) => setNewData(e.target.value)}
  placeholder='Input a json file'></input>
             <button className="border-2 p-2" onClick={() => writeToJson(path, newData)}>Submit</button>

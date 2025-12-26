@@ -1,11 +1,12 @@
-import localData from "../data/SchedulerData.json";
+import localData from "../data/BackendData.json";
 import Section from "./sectionCard";
 import InputPage from "./InputPage";
 
 /**
  * Author: Addison A
- * Modified By: 
- * Last Updated: 12/15/2025
+ * Last Updated: 12/26/2025
+ * 
+ * Editors: 
  */
 
 /**

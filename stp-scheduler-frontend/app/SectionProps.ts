@@ -2,11 +2,11 @@
  * Interface for a Section on the schedule
  */
 interface SectionProps {
-    id: number, 
+    id: string, 
     subject: string, 
     level: string, 
     timeBlockId: number, 
     days: string[], 
-    studentIds: Array<number>, 
-    teacherId: number
+    studentIds: Array<string>, 
+    teacherId: string
 }
