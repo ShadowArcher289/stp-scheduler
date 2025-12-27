@@ -1,4 +1,6 @@
+import { stdout } from "process";
 import localData from "../data/BackendData.json";
+import { get } from "http";
 
 /**
  * Author: Addison A
@@ -43,6 +45,19 @@ function getTeacherName(teachers: Array<TeacherProps>, teacherId: string): strin
     }
 }
 
+function getSectionLevel(level: number): string{
+    switch(level){
+        case 0:
+            return "Beginner";
+        case 1:
+            return "Intermediate";  
+        case 2:
+            return "Advanced";  
+        default:
+            return "";
+    }
+}
+
 export default function Section({
     id, 
     subject, 
@@ -59,7 +74,7 @@ export default function Section({
                 backgroundColor: getBackgroundColor(subject),
             }}
         >
-            {getTeacherName(localData.teachers as Array<TeacherProps>, teacherId)} - {subject}
+            {getTeacherName(localData.teachers as Array<TeacherProps>, teacherId)} - {getSectionLevel(level)} {subject.charAt(0).toUpperCase() + subject.slice(1)}
         </div>
     );
 }

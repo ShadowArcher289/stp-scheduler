@@ -4,7 +4,7 @@
 interface SectionProps {
     id: string, 
     subject: string, 
-    level: string, 
+    level: number, 
     timeBlockId: number, 
     days: string[], 
     studentIds: Array<string>, 
