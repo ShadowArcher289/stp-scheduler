@@ -49,7 +49,7 @@ function resetSectionCount(){
  * @returns number
  */
 function getEmptySpacesCount(): number{
-  return 55 - SectionCount;
+  return (55) - SectionCount;
 }
 
 /**

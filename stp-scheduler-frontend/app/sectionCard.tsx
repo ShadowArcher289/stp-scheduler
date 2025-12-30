@@ -1,6 +1,4 @@
-import { stdout } from "process";
 import localData from "../data/BackendData.json";
-import { get } from "http";
 
 /**
  * Author: Addison A

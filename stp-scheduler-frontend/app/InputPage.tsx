@@ -39,6 +39,10 @@ export default function InputPage({path, jsonData}: InputPageProps){
             <p>New Data Input: (Unimplemented)</p>
             <input type='text' id="newData" value={newData} className="border-2 p-2" onChange={(e) => setNewData(e.target.value)}
  placeholder='Input a json file'></input>
+            
+            <br></br>
+            <p>Enter a valid spreadsheet file: &nbsp;</p>
+            <input type="file" id="fileInput" className={"border-2 p-2"} accept=".xlsx"/>
             <button className="border-2 p-2" onClick={() => writeToJson(path, newData)}>Submit</button>
         </div>
     );
