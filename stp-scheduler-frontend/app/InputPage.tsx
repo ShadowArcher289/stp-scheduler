@@ -2,6 +2,8 @@
 
 // import * as fs from 'fs';
 import { useState } from 'react';
+import * as XLSX from '@e965/xlsx';
+import { write } from 'fs';
 
 /**
  * Author: Addison A
@@ -13,7 +15,6 @@ import { useState } from 'react';
 
 interface InputPageProps {
     path: string;
-    jsonData: string;
 }
 
 /**
@@ -22,7 +23,8 @@ interface InputPageProps {
  * @param newJsonData data for the file
  */
 function writeToJson(filePath: string, newJsonData: string){
-    console.log(newJsonData);
+    console.log("Filepath: " + filePath);
+    console.log("newJsonData: " + newJsonData);
     // fs.writeFileSync(filePath, newJsonData);
 }
 
@@ -31,19 +33,54 @@ function writeToJson(filePath: string, newJsonData: string){
  * @param jsonFile the json to edit. Default: "../data/SchedulerData.json"
  * @returns <div></div>
  */
-export default function InputPage({path, jsonData}: InputPageProps){
+export default function InputPage({path}: InputPageProps){
     const [newData, setNewData] = useState<string>("");
     
+    /**
+     * Handles file upload. Generated from Copilot
+     * @param e 
+     * @returns null if invalid
+     */
+    function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = (evt) => {
+            const data = evt.target?.result;
+            if (!data) return;
+
+            // Parse the workbook
+            const workbook = XLSX.read(data, { type: "binary" });
+
+            // Get the first sheet
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+
+            // Convert to JSON
+            const json = XLSX.utils.sheet_to_json(sheet);
+
+            // Store JSON as a string so <p> can display it
+            setNewData(JSON.stringify(json, null, 2));
+        };
+
+        reader.readAsBinaryString(file);
+
+        writeToJson(path, newData);
+    }
+
     return(
         <div>
-            <p>New Data Input: (Unimplemented)</p>
-            <input type='text' id="newData" value={newData} className="border-2 p-2" onChange={(e) => setNewData(e.target.value)}
- placeholder='Input a json file'></input>
-            
+ 
             <br></br>
-            <p>Enter a valid spreadsheet file: &nbsp;</p>
-            <input type="file" id="fileInput" className={"border-2 p-2"} accept=".xlsx"/>
-            <button className="border-2 p-2" onClick={() => writeToJson(path, newData)}>Submit</button>
+            <form name="fileInput">
+                <label>Enter a valid spreadsheet file:</label>
+                <br />
+                <input type="file" id="fileInput" className={"border-2 p-2"} accept=".xlsx" onChange={handleFileUpload}/>
+            </form>
+
+            <p>{newData}</p>
         </div>
     );
 }

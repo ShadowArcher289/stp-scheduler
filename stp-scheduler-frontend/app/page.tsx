@@ -118,7 +118,7 @@ export default function Home() {
     // table to put all the sections in the day
     // Sections to put in each table that require data to display
     <section className="min-h-screen items-center justify-center p-12 bg-zinc-50 font-sans dark:bg-black">
-      <InputPage path={"../data/InputTestData.json" } jsonData={JSON.stringify(localData)}></InputPage>
+      <InputPage path={"../data/InputTestData.json"}></InputPage>
 
       <div id="schedule" className="grid grid-cols-6 grid-rows-12 grid-flow-dense w-auto border-2 border-solid">
         {/* Headers */}
