@@ -99,8 +99,8 @@ export default function InputPage({path}: InputPageProps){
 
             <br></br>
 
-            <p>Teachers: {teacherData}</p>
-            <p>Students: {studentData}</p>
+            <p>{teacherData}</p>
+            <p>{studentData}</p>
         </div>
     );
 }

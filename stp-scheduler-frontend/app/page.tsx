@@ -117,57 +117,60 @@ export default function Home() {
   return (
 
 
-    <section className="min-h-screen items-center justify-center p-12 bg-zinc-50 font-sans dark:bg-black">
+    <section className="min-h-screen items-center justify-center p-12 font-sans dark:bg-black">
     {/* Inputs */}
       <InputPage path={"../data/InputTestData.json"}></InputPage>
 
     <br></br>
     
     {/*  Schedule */}
-      <div id="schedule" className="grid grid-cols-6 grid-rows-12 grid-flow-dense w-auto border-2 border-solid">
-        {/* Headers */}
-        <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">Time</h4>
-        <h4 className="flex justify-center items-center col-start-2 col-span-1 bg-stone-300 text-black border-2 border-white">Monday</h4>
-        <h4 className="flex justify-center items-center col-start-3 col-span-1 bg-stone-300 text-black border-2 border-white">Tuesday</h4>
-        <h4 className="flex justify-center items-center col-start-4 col-span-1 bg-stone-300 text-black border-2 border-white">Wednesday</h4>
-        <h4 className="flex justify-center items-center col-start-5 col-span-1 bg-stone-300 text-black border-2 border-white">Thursday</h4>
-        <h4 className="flex justify-center items-center col-start-6 col-span-1 bg-stone-300 text-black border-2 border-white">Friday</h4>
+      <div className="p-16 rounded-4xl bg-zinc-100">
+        <div id="schedule" className="grid grid-cols-6 grid-rows-[4rem_repeat(11,1fr)] grid-flow-dense w-auto border-2 border-solid bg-black bg-opacity-50 text-xl">
+          
+          {/* Fill in the days on top */}
+          <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-stone-300 text-black border-2 border-black">Time</h4>
+          <h4 className="flex justify-center items-center col-start-2 col-span-1 bg-stone-300 text-black border-2 border-black">Monday</h4>
+          <h4 className="flex justify-center items-center col-start-3 col-span-1 bg-stone-300 text-black border-2 border-black">Tuesday</h4>
+          <h4 className="flex justify-center items-center col-start-4 col-span-1 bg-stone-300 text-black border-2 border-black">Wednesday</h4>
+          <h4 className="flex justify-center items-center col-start-5 col-span-1 bg-stone-300 text-black border-2 border-black">Thursday</h4>
+          <h4 className="flex justify-center items-center col-start-6 col-span-1 bg-stone-300 text-black border-2 border-black">Friday</h4>
 
-        {/* Fill in the time on the left */}
-        {localData.timeBlock.map(time => (
-          <div key={time.id} className="flex justify-center items-center p-3 col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
-        ))}
-
-
-        {/* Create & Fill Cells with Sections */}
-        {Object.entries(groupedSections).map(([key, sections]) => {
-          incrementSectionCount();
-          const [day, timeBlockId] = key.split("-");
-          return (
-            <div
-              key={key}
-              className="col-span-1 row-span-1 border-2 border-dotted p-2 flex flex-col gap-2 text-center"
-              style={{
-                gridColumnStart: getStartColumn(day),
-                gridColumnEnd: `span 1`,
-                gridRowStart: getStartRow(parseInt(timeBlockId)),
-                gridRowEnd: `span 1`
-              }}
-            >
-              {sections.map((section, index) => (
-                <Section key={index} id={section.id} subject={section.subject} level={section.level} timeBlockId={section.timeBlockId} days={section.days} studentIds={section.studentIds} teacherId={section.teacherId}></Section>
-              ))}
-            </div>
-          );
-        })}
+          {/* Fill in the time on the left */}
+          {localData.timeBlock.map(time => (
+            <div key={time.id} className="flex justify-center items-center p-3 col-start-1 col-span-1 bg-stone-300 text-black border-2 border-black">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
+          ))}
 
 
-        {/* Fill in empty spaces */}
-        {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
-          <div key={index} className="col-span-1 row-span-1 border-2 border-dotted p-6 text-center"></div>
-        ))}
+          {/* Create & Fill Cells with Sections */}
+          {Object.entries(groupedSections).map(([key, sections]) => {
+            incrementSectionCount();
+            const [day, timeBlockId] = key.split("-");
+            return (
+              <div
+                key={key}
+                className="col-span-1 row-span-1 border-1 border-t-0 border-l-0 border-dotted p-2 flex flex-col gap-2 text-center"
+                style={{
+                  gridColumnStart: getStartColumn(day),
+                  gridColumnEnd: `span 1`,
+                  gridRowStart: getStartRow(parseInt(timeBlockId)),
+                  gridRowEnd: `span 1`
+                }}
+              >
+                {sections.map((section, index) => (
+                  <Section key={index} id={section.id} subject={section.subject} level={section.level} timeBlockId={section.timeBlockId} days={section.days} studentIds={section.studentIds} teacherId={section.teacherId}></Section>
+                ))}
+              </div>
+            );
+          })}
+
+
+          {/* Fill in empty spaces */}
+          {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
+            <div key={index} className="col-span-1 row-span-1 border-1 border-t-0 border-l-0 border-dotted p-6 text-center"></div>
+          ))}
+        </div>
       </div>
-      
+
     </section>
   );
 }
