@@ -115,11 +115,15 @@ export default function Home() {
   const groupedSections = groupSections(localData.sections);
   resetSectionCount();
   return (
-    // table to put all the sections in the day
-    // Sections to put in each table that require data to display
+
+
     <section className="min-h-screen items-center justify-center p-12 bg-zinc-50 font-sans dark:bg-black">
+    {/* Inputs */}
       <InputPage path={"../data/InputTestData.json"}></InputPage>
 
+    <br></br>
+    
+    {/*  Schedule */}
       <div id="schedule" className="grid grid-cols-6 grid-rows-12 grid-flow-dense w-auto border-2 border-solid">
         {/* Headers */}
         <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">Time</h4>

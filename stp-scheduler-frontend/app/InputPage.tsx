@@ -71,7 +71,7 @@ export default function InputPage({path}: InputPageProps){
     }
 
     return(
-        <div>
+        <div className={"pb-12 mb-4 border-b-2"}>
  
             <br></br>
             <form name="fileInput">
