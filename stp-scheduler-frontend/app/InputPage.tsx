@@ -7,7 +7,7 @@ import { write } from 'fs';
 
 /**
  * Author: Addison A
- * Last Updated: 12/26/2025
+ * Last Updated: 1/14/2026
  * 
  * Editors: 
  */
@@ -83,7 +83,7 @@ export default function InputPage({path}: InputPageProps){
     }
 
     return(
-        <div className={"p-4 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>
+        <div className={"p-4 pl-16 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>
             
             <form name="fileInput">
                 <br />
