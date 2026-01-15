@@ -1,7 +1,6 @@
 import localData from "../data/BackendData.json";
 import Section from "./sectionCard";
 import InputPage from "./InputPage";
-import './globals.css';
 
 /**
  * Author: Addison A
@@ -118,14 +117,14 @@ export default function Home() {
   return (
 
 
-    <section className="min-h-screen items-center justify-center p-12 font-sans dark:bg-[var(--main-background-color)]">
-    {/* Inputs */}
+    <section className="min-h-screen items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
+      {/* Inputs */}
       <InputPage path={"../data/InputTestData.json"}></InputPage>
 
-    <br></br>
+      <br></br>
     
-    {/*  Schedule */}
-      <div className="p-4 rounded-4xl bg-gray-800">
+      {/*  Schedule */}
+      <div className="m-12 mt-0 p-4 rounded-4xl bg-gray-800">
         <div id="schedule" className="grid grid-cols-[10rem_repeat(5,1fr)] grid-rows-[4rem_repeat(11,1fr)] grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-xl rounded-4xl">
           
           {/* Fill in the days on top */}

@@ -83,18 +83,17 @@ export default function InputPage({path}: InputPageProps){
     }
 
     return(
-        <div className={"pb-12 mb-4 border-b-2 bg-[#f76902] text-white"}>
+        <div className={"p-4 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>
             
-            <br></br>
             <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit Teachers:</label>
-                <input type="file" id="fileInput" className={"border-2 p-1"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
+                <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
             </form>
             <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit Students:</label>
-                <input type="file" id="fileInput" className={"border-2 p-1"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
+                <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
             </form>
 
             <br></br>
