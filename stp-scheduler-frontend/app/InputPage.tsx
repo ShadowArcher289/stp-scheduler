@@ -88,13 +88,13 @@ export default function InputPage({path}: InputPageProps){
             <br></br>
             <form name="fileInput">
                 <br />
-                <label className={"p-2 pr-4"} >Submit Teachers:</label>
-                <input type="file" id="fileInput" className={"border-2 p-1"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
+                <label className={"p-2 pr-4 text-[var(--main-text-color)]"} >Submit Teachers:</label>
+                <input type="file" id="fileInput" className={"border-2 p-1 text-[var(--main-text-color)]"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
             </form>
             <form name="fileInput">
                 <br />
-                <label className={"p-2 pr-4"} >Submit Students:</label>
-                <input type="file" id="fileInput" className={"border-2 p-1"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
+                <label className={"p-2 pr-4 text-[var(--main-text-color)]"} >Submit Students:</label>
+                <input type="file" id="fileInput" className={"border-2 p-1 text-[var(--main-text-color)]"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
             </form>
 
             <br></br>

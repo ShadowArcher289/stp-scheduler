@@ -67,7 +67,7 @@ export default function Section({
 }: SectionProps){
     return(
         <div 
-            className="flex grow col-span-1 row-span-1 border-2 border-dotted p-6 justify-center items-center"
+            className="flex grow col-span-1 row-span-1 p-6 justify-center items-center"
             style={{
                 backgroundColor: getBackgroundColor(subject),
             }}
