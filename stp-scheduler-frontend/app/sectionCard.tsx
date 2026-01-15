@@ -13,13 +13,13 @@ import localData from "../data/BackendData.json";
  * @returns string "valid css color"
  */
 function getBackgroundColor(subject: string){
-    switch (subject.toLowerCase()) {
+    switch (subject.toLowerCase()) { //TODO: Powdered colors
         case "math":
-            return "red";
+            return "#ff4040ff";
         case "english":
-            return "blue";
+            return "#4a86e8ff";
         case "asl":
-            return "green"
+            return "#80c362ff"
         default:
             console.log("Invalid subject inputted");
             break;
@@ -67,7 +67,7 @@ export default function Section({
 }: SectionProps){
     return(
         <div 
-            className="flex grow col-span-1 row-span-1 border-2 border-dotted p-6 justify-center items-center"
+            className="flex grow col-span-1 row-span-1 p-6 justify-center items-center rounded-3xl"
             style={{
                 backgroundColor: getBackgroundColor(subject),
             }}

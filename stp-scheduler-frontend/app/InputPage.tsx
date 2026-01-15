@@ -7,7 +7,7 @@ import { write } from 'fs';
 
 /**
  * Author: Addison A
- * Last Updated: 12/26/2025
+ * Last Updated: 1/14/2026
  * 
  * Editors: 
  */
@@ -34,14 +34,15 @@ function writeToJson(filePath: string, newJsonData: string){
  * @returns <div></div>
  */
 export default function InputPage({path}: InputPageProps){
-    const [newData, setNewData] = useState<string>("");
-    
+    const [teacherData, setTeacherData] = useState<string>("");
+    const [studentData, setStudentData] = useState<string>("");
+
     /**
      * Handles file upload. Generated from Copilot
      * @param e 
      * @returns null if invalid
      */
-    function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>, type: String) {
         const file = e.target.files?.[0];
         if (!file) return;
 
@@ -62,25 +63,43 @@ export default function InputPage({path}: InputPageProps){
             const json = XLSX.utils.sheet_to_json(sheet);
 
             // Store JSON as a string so <p> can display it
-            setNewData(JSON.stringify(json, null, 2));
+            if(type.toLowerCase() === "teachers"){
+                setTeacherData(JSON.stringify(json, null, 2));
+            }
+            else{
+                setStudentData(JSON.stringify(json, null, 2));
+            }
+            
         };
 
         reader.readAsBinaryString(file);
 
-        writeToJson(path, newData);
+        if(type.toLowerCase() === "teachers"){
+            writeToJson(path, teacherData);
+        }
+        else{
+            writeToJson(path, studentData);
+        }
     }
 
     return(
-        <div>
- 
-            <br></br>
+        <div className={"p-4 pl-16 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>
+            
             <form name="fileInput">
-                <label>Enter a valid spreadsheet file:</label>
                 <br />
-                <input type="file" id="fileInput" className={"border-2 p-2"} accept=".xlsx" onChange={handleFileUpload}/>
+                <label className={"p-2 pr-4"} >Submit Teachers:</label>
+                <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
+            </form>
+            <form name="fileInput">
+                <br />
+                <label className={"p-2 pr-4"} >Submit Students:</label>
+                <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
             </form>
 
-            <p>{newData}</p>
+            <br></br>
+
+            <p>{teacherData}</p>
+            <p>{studentData}</p>
         </div>
     );
 }

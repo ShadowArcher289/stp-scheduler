@@ -4,7 +4,7 @@ import InputPage from "./InputPage";
 
 /**
  * Author: Addison A
- * Last Updated: 12/26/2025
+ * Last Updated: 1/14/2026
  * 
  * Editors: 
  */
@@ -115,55 +115,62 @@ export default function Home() {
   const groupedSections = groupSections(localData.sections);
   resetSectionCount();
   return (
-    // table to put all the sections in the day
-    // Sections to put in each table that require data to display
-    <section className="min-h-screen items-center justify-center p-12 bg-zinc-50 font-sans dark:bg-black">
+
+
+    <section className="min-h-screen items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
+      {/* Inputs */}
       <InputPage path={"../data/InputTestData.json"}></InputPage>
 
-      <div id="schedule" className="grid grid-cols-6 grid-rows-12 grid-flow-dense w-auto border-2 border-solid">
-        {/* Headers */}
-        <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">Time</h4>
-        <h4 className="flex justify-center items-center col-start-2 col-span-1 bg-stone-300 text-black border-2 border-white">Monday</h4>
-        <h4 className="flex justify-center items-center col-start-3 col-span-1 bg-stone-300 text-black border-2 border-white">Tuesday</h4>
-        <h4 className="flex justify-center items-center col-start-4 col-span-1 bg-stone-300 text-black border-2 border-white">Wednesday</h4>
-        <h4 className="flex justify-center items-center col-start-5 col-span-1 bg-stone-300 text-black border-2 border-white">Thursday</h4>
-        <h4 className="flex justify-center items-center col-start-6 col-span-1 bg-stone-300 text-black border-2 border-white">Friday</h4>
+      <br></br>
+    
+      {/*  Schedule */}
+      <div className="m-12 mt-0 p-4 rounded-4xl bg-gray-800">
+        <div id="schedule" className="grid grid-cols-[10rem_repeat(5,1fr)] grid-rows-[4rem_repeat(11,1fr)] grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-xl rounded-4xl">
+          
+          {/* Fill in the days on top */}
+          <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] font-bold border-3 border-t-0 border-l-0 border-solid rounded-tl-4xl">Time</h4>
+          <h4 className="flex justify-center items-center col-start-2 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-t-0 border-l-0 border-r-2 border-solid">Monday</h4>
+          <h4 className="flex justify-center items-center col-start-3 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-t-0 border-l-0 border-r-2 border-solid">Tuesday</h4>
+          <h4 className="flex justify-center items-center col-start-4 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-t-0 border-l-0 border-r-2 border-solid">Wednesday</h4>
+          <h4 className="flex justify-center items-center col-start-5 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-t-0 border-l-0 border-r-2 border-solid">Thursday</h4>
+          <h4 className="flex justify-center items-center col-start-6 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-t-0 border-l-0 border-r-0 border-solid rounded-tr-4xl">Friday</h4>
 
-        {/* Fill in the time on the left */}
-        {localData.timeBlock.map(time => (
-          <div key={time.id} className="flex justify-center items-center p-3 col-start-1 col-span-1 bg-stone-300 text-black border-2 border-white">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
-        ))}
-
-
-        {/* Create & Fill Cells with Sections */}
-        {Object.entries(groupedSections).map(([key, sections]) => {
-          incrementSectionCount();
-          const [day, timeBlockId] = key.split("-");
-          return (
-            <div
-              key={key}
-              className="col-span-1 row-span-1 border-2 border-dotted p-2 flex flex-col gap-2 text-center"
-              style={{
-                gridColumnStart: getStartColumn(day),
-                gridColumnEnd: `span 1`,
-                gridRowStart: getStartRow(parseInt(timeBlockId)),
-                gridRowEnd: `span 1`
-              }}
-            >
-              {sections.map((section, index) => (
-                <Section key={index} id={section.id} subject={section.subject} level={section.level} timeBlockId={section.timeBlockId} days={section.days} studentIds={section.studentIds} teacherId={section.teacherId}></Section>
-              ))}
-            </div>
-          );
-        })}
+          {/* Fill in the time on the left */}
+          {localData.timeBlock.map(time => (
+            <div key={time.id} className="flex justify-center text-center items-center p-3 col-start-1 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-b-2 border-t-0 border-l-0 border-solid">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
+          ))}
 
 
-        {/* Fill in empty spaces */}
-        {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
-          <div key={index} className="col-span-1 row-span-1 border-2 border-dotted p-6 text-center"></div>
-        ))}
+          {/* Create & Fill Cells with Sections */}
+          {Object.entries(groupedSections).map(([key, sections]) => {
+            incrementSectionCount();
+            const [day, timeBlockId] = key.split("-");
+            return (
+              <div // TODO: make text size based on the window size so that it is always more legible
+                key={key}
+                className="col-span-1 row-span-1 border-2 border-t-0 border-l-0 border-solid border-[var(--main-text-color)] p-2 flex flex-col gap-2 text-center"
+                style={{
+                  gridColumnStart: getStartColumn(day),
+                  gridColumnEnd: `span 1`,
+                  gridRowStart: getStartRow(parseInt(timeBlockId)),
+                  gridRowEnd: `span 1`
+                }}
+              >
+                {sections.map((section, index) => (
+                  <Section key={index} id={section.id} subject={section.subject} level={section.level} timeBlockId={section.timeBlockId} days={section.days} studentIds={section.studentIds} teacherId={section.teacherId}></Section>
+                ))}
+              </div>
+            );
+          })}
+
+
+          {/* Fill in empty spaces */}
+          {Array.from({ length: getEmptySpacesCount() }, (_, index) => (
+            <div key={index} className="col-span-1 row-span-1 border-2 border-t-0 border-l-0 border-solid border-[var(--main-text-color)] p-6 text-center"></div>
+          ))}
+        </div>
       </div>
-      
+
     </section>
   );
 }
