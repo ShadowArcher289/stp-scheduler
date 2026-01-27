@@ -45,11 +45,11 @@ function resetSectionCount(){
 }
 
 /**
- * Returns the number of unused cells in the grid
+ * Returns the number of unused cells in the grid. Calculates cell count using the number of timeBlocks in localData * 5(the number of days)
  * @returns number
  */
 function getEmptySpacesCount(): number{
-  return (55) - SectionCount;
+  return (localData.timeBlock.length * 5) - SectionCount;
 }
 
 /**
@@ -125,7 +125,14 @@ export default function Home() {
     
       {/*  Schedule */}
       <div className="m-12 mt-0 p-4 rounded-4xl bg-gray-800">
-        <div id="schedule" className="grid grid-cols-[10rem_repeat(5,1fr)] grid-rows-[4rem_repeat(11,1fr)] grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-xl rounded-4xl">
+        <div 
+          id="schedule" 
+          className="grid grid-cols-[10rem_repeat(5,1fr)] grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-xl rounded-4xl"
+          // grid-rows-[4rem_repeat(11,1fr)]
+          style={{
+            gridTemplateRows: `4rem repeat(${localData.timeBlock.length}, 1fr)`
+          }}
+        >
           
           {/* Fill in the days on top */}
           <h4 className="flex justify-center items-center col-start-1 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] font-bold border-3 border-t-0 border-l-0 border-solid rounded-tl-4xl">Time</h4>
