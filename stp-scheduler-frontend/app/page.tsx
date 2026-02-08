@@ -114,6 +114,22 @@ function getStartRow(timeBlockId: number){
 export default function Home() {
   const groupedSections = groupSections(localData.sections);
   resetSectionCount();
+  
+  //   const fetchData = async () => {
+  //     try {
+  //       // Replace with your actual API endpoint
+  //       const response = await fetch('http://localhost:8000/teachers');
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       else{
+  //       }
+  //       const result = await response.json();
+  //       console.log(result)
+  //     } catch (err) {
+  //   }
+  // }
+  // fetchData();
   return (
 
 

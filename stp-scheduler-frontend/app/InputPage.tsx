@@ -4,10 +4,11 @@
 import { useState } from 'react';
 import * as XLSX from '@e965/xlsx';
 import { write } from 'fs';
+import { match } from 'assert';
 
 /**
  * Author: Addison A
- * Last Updated: 1/14/2026
+ * Last Updated: 2/2/2026
  * 
  * Editors: 
  */
@@ -82,9 +83,32 @@ export default function InputPage({path}: InputPageProps){
         }
     }
 
+    /**
+     * Runs fetch a request to retrieve specified data from the backend and calls to set the .json file to it
+     */
+    async function getFromBackendApi(type: string){
+        try {
+            const response = await fetch('http://localhost:8000/' + type.toLowerCase());
+
+            if (!response.ok) { 
+                throw new Error(`HTTP error! status: ${response.status}`); 
+            }
+
+            const result = await response.json();
+            console.log(result);
+            writeToJson("..\\data\\actualData\\" + type + ".json", result);
+
+        } catch (err) {
+            console.log("ERROR: The backend did not retrieve data: " + err);
+        }
+    }
+
     return(
         <div className={"p-4 pl-16 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>
-            
+            <button onClick={() => getFromBackendApi("Teachers")} className={"border-2 active:backdrop-brightness-90"}>Get Teachers data (Make sure backend is running)</button>
+            <button onClick={() => getFromBackendApi("Students")} className={"border-2 active:backdrop-brightness-90"}>Get Students data</button>
+            <button onClick={() => getFromBackendApi("Sections")} className={"border-2 active:backdrop-brightness-90"}>Get Sections data</button>
+            {/* <button onClick={() => getFromBackendApi("Timeblocks")} className={"border-2 active:backdrop-brightness-90"}>Get Timeblocks data</button> */}
             <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit Teachers:</label>
