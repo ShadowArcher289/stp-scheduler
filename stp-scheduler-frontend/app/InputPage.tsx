@@ -13,6 +13,10 @@ import { match } from 'assert';
  * Editors: 
  */
 
+export var teacher_data: any = [];
+export var student_data: any = [];
+export var section_data: any = [];
+
 
 interface InputPageProps {
     path: string;
@@ -24,9 +28,11 @@ interface InputPageProps {
  * @param newJsonData data for the file
  */
 function writeToJson(filePath: string, newJsonData: string){
-    console.log("Filepath: " + filePath);
-    console.log("newJsonData: " + newJsonData);
+    // console.log("Filepath: " + filePath);
+    // console.log("newJsonData: " + newJsonData);
+
     // fs.writeFileSync(filePath, newJsonData);
+    // TODO: Set data to the .json files
 }
 
 /**
@@ -98,10 +104,37 @@ export default function InputPage({path}: InputPageProps){
             console.log(result);
             writeToJson("..\\data\\actualData\\" + type + ".json", result);
 
+            switch (type) {
+                case "Teachers":
+                    teacher_data = result;
+                    // console.log("Teacher data:\n" + teacher_data.toString())
+                    break;
+                
+                case "Students":
+                    student_data = result;
+                    // console.log("Student data:\n" + student_data.toString())
+                    break;
+                case "Sections":
+                    section_data = result;
+                    section_data.forEach((element: { days: string[]; }) => { // REMOVE LATER: the backend does not set days, these lines should be removed once it does.
+                        element.days = ["M", "T", "W", "R", "F"]; 
+                    });
+                    // console.log("Sections data:\n" + section_data.toString())
+                    break;
+            
+                default:
+                    break;
+            }
+
+
         } catch (err) {
             console.log("ERROR: The backend did not retrieve data: " + err);
         }
     }
+
+    getFromBackendApi("Teachers");
+    getFromBackendApi("Students");
+    getFromBackendApi("Sections");
 
     return(
         <div className={"p-4 pl-16 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>

@@ -1,10 +1,13 @@
+'use client'
+
 import localData from "../data/BackendData.json";
 import Section from "./sectionCard";
-import InputPage from "./InputPage";
+import InputPage, { teacher_data, student_data, section_data } from "./InputPage";
+import { useEffect, useState } from "react";
 
 /**
  * Author: Addison A
- * Last Updated: 1/14/2026
+ * Last Updated: 1/16/2026
  * 
  * Editors: 
  */
@@ -12,7 +15,29 @@ import InputPage from "./InputPage";
 /**
  * The number of sections in the grid
  */
-var SectionCount = 0;
+var sectionCount = 0;
+
+var pageStudentData = localData.students;
+var pageTeacherData = localData.teachers;
+var pageTimeblockData = localData.timeBlock;
+var pageSectionData = localData.sections;
+
+function updateTableData(): void {
+  console.log("Data being updated")
+  if (student_data != "" && (pageStudentData != student_data)){
+    pageStudentData = student_data
+  }
+  if (teacher_data != "" && (pageTeacherData != teacher_data)){
+    pageTeacherData = teacher_data
+  }
+  if (section_data != "" && (pageSectionData != teacher_data)){
+    pageSectionData = section_data
+  }
+  // if (timeblock_data != "" && (pageTimeblockData != teacher_data)){
+  //   pageTimeblockData = teacher_data
+  // }
+
+}
 
 /**
  * Converts time from military time(ex: 13:00) to civilian time(ex: 1:00pm)
@@ -31,25 +56,17 @@ function militaryToCivilianTime(time: string): string{
 
 
 /**
- * Increments the SectionCount by 1
+ * Increments the sectionCount by 1
  */
 function incrementSectionCount(): void{
-  SectionCount++;
+  sectionCount++;
 }
 
 /**
  * Resets the SectionCount to 0
  */
 function resetSectionCount(){
-  SectionCount = 0;
-}
-
-/**
- * Returns the number of unused cells in the grid. Calculates cell count using the number of timeBlocks in localData * 5(the number of days)
- * @returns number
- */
-function getEmptySpacesCount(): number{
-  return (localData.timeBlock.length * 5) - SectionCount;
+  sectionCount = 0;
 }
 
 /**
@@ -111,9 +128,32 @@ function getStartRow(timeBlockId: number){
     return timeBlockId + 2;
 }
 
+
 export default function Home() {
-  const groupedSections = groupSections(localData.sections);
-  resetSectionCount();
+
+  const [studentData, setStudentData] = useState([{}]);
+  const [teacherData, setTeacherData] = useState([{}]);
+  const [sectionData, setSectionData] = useState([{
+    id: "", 
+    subject: "string", 
+    level: 0, 
+    timeBlockId: 0, 
+    days: ["M", "T", "W", "R", "F"], 
+    studentIds: [""], 
+    teacherId: ""
+  }]);
+  const [timeblockData, setTimeblockData] = useState([{id: 0, start: "", end: ""}]);
+
+  /**
+   * Returns the number of unused cells in the grid. Calculates cell count using the number of timeBlocks in localData * 5(the number of days)
+   * @returns number
+   */
+  function getEmptySpacesCount(): number{
+    return (timeblockData.length * 5) - sectionCount;
+  }
+  
+  console.log("SData: \n" + studentData)
+  console.log("TData: \n" + teacherData)
   
   //   const fetchData = async () => {
   //     try {
@@ -130,15 +170,35 @@ export default function Home() {
   //   }
   // }
   // fetchData();
-  return (
+  
+  function generateSchedule(){
+    updateTableData()
 
+    setStudentData(pageStudentData)
+    setTeacherData(pageTeacherData)
+    setSectionData(pageSectionData)
+    setTimeblockData(pageTimeblockData)
+
+    console.log("schedule generated")
+  }
+  
+  console.log("studentData: \n" + (studentData))
+  console.log("teacherData: \n" + teacherData)
+  console.log("sectionData: \n" + sectionData)
+  console.log("timeblockData: \n" + timeblockData)
+
+  const groupedSections = groupSections(sectionData as []);
+  resetSectionCount();
+
+  return (
 
     <section className="min-h-screen items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
       {/* Inputs */}
       <InputPage path={"../data/InputTestData.json"}></InputPage>
 
       <br></br>
-    
+
+      <button onClick={generateSchedule} className={"border-2 active:backdrop-brightness-90 text-black"}>Generate Schedule</button>
       {/*  Schedule */}
       <div className="m-12 mt-0 p-4 rounded-4xl bg-gray-800">
         <div 
@@ -146,7 +206,7 @@ export default function Home() {
           className="grid grid-cols-[10rem_repeat(5,1fr)] grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-xl rounded-4xl"
           // grid-rows-[4rem_repeat(11,1fr)]
           style={{
-            gridTemplateRows: `4rem repeat(${localData.timeBlock.length}, 1fr)`
+            gridTemplateRows: `4rem repeat(${timeblockData.length}, 1fr)`
           }}
         >
           
@@ -159,7 +219,7 @@ export default function Home() {
           <h4 className="flex justify-center items-center col-start-6 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-t-0 border-l-0 border-r-0 border-solid rounded-tr-4xl">Friday</h4>
 
           {/* Fill in the time on the left */}
-          {localData.timeBlock.map(time => (
+          {timeblockData.map(time => (
             <div key={time.id} className="flex justify-center text-center items-center p-3 col-start-1 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-b-2 border-t-0 border-l-0 border-solid">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
           ))}
 
