@@ -7,6 +7,11 @@ import localData from "../data/BackendData.json";
  * Editors: 
  */
 
+interface SectionCardProps{
+    section: SectionProps
+    teachers: TeacherProps[]
+}
+
 /**
  * returns a background color based on the subject of the section
  * @param subject string
@@ -56,23 +61,26 @@ function getSectionLevel(level: number): string{
     }
 }
 
-export default function Section({
-    id, 
-    subject, 
-    level, 
-    timeBlockId, 
-    days, 
-    studentIds, 
-    teacherId
-}: SectionProps){
+export default function Section(
+    // {
+    //     id, 
+    //     subject, 
+    //     level, 
+    //     timeBlockId, 
+    //     days, 
+    //     studentIds, 
+    //     teacherId
+    // }: SectionProps, teachers: TeacherProps[]
+    {section, teachers}: SectionCardProps
+){
     return(
         <div 
             className="flex grow col-span-1 row-span-1 p-5 text-lg justify-center items-center rounded-2xl"
             style={{
-                backgroundColor: getBackgroundColor(subject),
+                backgroundColor: getBackgroundColor(section.subject),
             }}
         >
-            {getTeacherName(localData.teachers as Array<TeacherProps>, teacherId)} - {getSectionLevel(level)} {subject.charAt(0).toUpperCase() + subject.slice(1)}
+            {getTeacherName(teachers as Array<TeacherProps>, section.teacherId)} - {getSectionLevel(section.level)} {section.subject.charAt(0).toUpperCase() + section.subject.slice(1)}
         </div>
     );
 }

@@ -1,14 +1,11 @@
 "use client"
 
-// import * as fs from 'fs';
 import { useState } from 'react';
 import * as XLSX from '@e965/xlsx';
-import { write } from 'fs';
-import { match } from 'assert';
 
 /**
  * Author: Addison A
- * Last Updated: 2/2/2026
+ * Last Updated: 2/16/2026
  * 
  * Editors: 
  */
@@ -28,11 +25,11 @@ interface InputPageProps {
  * @param newJsonData data for the file
  */
 function writeToJson(filePath: string, newJsonData: string){
-    // console.log("Filepath: " + filePath);
-    // console.log("newJsonData: " + newJsonData);
+    console.log("Writing data:")
+    console.log("Filepath: " + filePath);
+    console.log("newJsonData: " + newJsonData);
 
-    // fs.writeFileSync(filePath, newJsonData);
-    // TODO: Set data to the .json files
+    // TODO: Set data to the .json files or update backend data
 }
 
 /**
@@ -136,12 +133,16 @@ export default function InputPage({path}: InputPageProps){
     getFromBackendApi("Students");
     getFromBackendApi("Sections");
 
+    // Contains functions for retrieving data 
     return(
         <div className={"p-4 pl-16 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>
-            <button onClick={() => getFromBackendApi("Teachers")} className={"border-2 active:backdrop-brightness-90"}>Get Teachers data (Make sure backend is running)</button>
+            {/* <button onClick={() => getFromBackendApi("Teachers")} className={"border-2 active:backdrop-brightness-90"}>Get Teachers data (Make sure backend is running)</button>
             <button onClick={() => getFromBackendApi("Students")} className={"border-2 active:backdrop-brightness-90"}>Get Students data</button>
-            <button onClick={() => getFromBackendApi("Sections")} className={"border-2 active:backdrop-brightness-90"}>Get Sections data</button>
+            <button onClick={() => getFromBackendApi("Sections")} className={"border-2 active:backdrop-brightness-90"}>Get Sections data</button> */}
+            
             {/* <button onClick={() => getFromBackendApi("Timeblocks")} className={"border-2 active:backdrop-brightness-90"}>Get Timeblocks data</button> */}
+            
+            {/* User can input csv files*/}
             <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit Teachers:</label>

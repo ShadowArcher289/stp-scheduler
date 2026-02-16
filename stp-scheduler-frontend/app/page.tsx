@@ -22,6 +22,26 @@ var pageTeacherData = localData.teachers;
 var pageTimeblockData = localData.timeBlock;
 var pageSectionData = localData.sections;
 
+/**
+ * Changes the cursor to a loading state for 1 second.
+ * 
+ * @param duration int (milliseconds)
+ */
+function showLoadingCursor(duration: number): void {
+  const bodyElement = document.body;
+
+  // 1. Add the 'waiting' class to the body
+  bodyElement.classList.add('waiting');
+
+  // 2. Set a timeout to remove the class after 1000 milliseconds (1 second)
+  setTimeout(() => {
+    bodyElement.classList.remove('waiting');
+  }, duration);
+}
+
+/**
+ * Updates the page's data to the data from the InputPage
+ */
 function updateTableData(): void {
   console.log("Data being updated")
   if (student_data != "" && (pageStudentData != student_data)){
@@ -130,7 +150,6 @@ function getStartRow(timeBlockId: number){
 
 
 export default function Home() {
-
   const [studentData, setStudentData] = useState([{}]);
   const [teacherData, setTeacherData] = useState([{}]);
   const [sectionData, setSectionData] = useState([{
@@ -142,7 +161,11 @@ export default function Home() {
     studentIds: [""], 
     teacherId: ""
   }]);
-  const [timeblockData, setTimeblockData] = useState([{id: 0, start: "", end: ""}]);
+  const [timeblockData, setTimeblockData] = useState([{
+    id: 0, 
+    start: "", 
+    end: ""
+  }]);
 
   /**
    * Returns the number of unused cells in the grid. Calculates cell count using the number of timeBlocks in localData * 5(the number of days)
@@ -151,10 +174,8 @@ export default function Home() {
   function getEmptySpacesCount(): number{
     return (timeblockData.length * 5) - sectionCount;
   }
-  
-  console.log("SData: \n" + studentData)
-  console.log("TData: \n" + teacherData)
-  
+
+  //  UNUSED:
   //   const fetchData = async () => {
   //     try {
   //       // Replace with your actual API endpoint
@@ -171,21 +192,25 @@ export default function Home() {
   // }
   // fetchData();
   
+  /**
+   * Updates the schedule's data 
+   */
   function generateSchedule(){
+    showLoadingCursor(100)
     updateTableData()
 
-    setStudentData(pageStudentData)
-    setTeacherData(pageTeacherData)
-    setSectionData(pageSectionData)
-    setTimeblockData(pageTimeblockData)
+    if(pageSectionData != null && pageStudentData != null && pageTeacherData != null && pageTimeblockData != null){
+      setStudentData(pageStudentData)
+      setTeacherData(pageTeacherData)
+      setSectionData(pageSectionData)
+      setTimeblockData(pageTimeblockData)
+    }
+    else{
+      console.log("Error: not loaded")
+    }
 
     console.log("schedule generated")
   }
-  
-  console.log("studentData: \n" + (studentData))
-  console.log("teacherData: \n" + teacherData)
-  console.log("sectionData: \n" + sectionData)
-  console.log("timeblockData: \n" + timeblockData)
 
   const groupedSections = groupSections(sectionData as []);
   resetSectionCount();
@@ -198,7 +223,9 @@ export default function Home() {
 
       <br></br>
 
-      <button onClick={generateSchedule} className={"border-2 active:backdrop-brightness-90 text-black"}>Generate Schedule</button>
+      <div className={"p-4 pl-16 mb-4 border-b-2 bg-[#f76902] text-white"}>
+        <button onClick={generateSchedule} className={"border-2 active:backdrop-brightness-90 p-2 pr-4"}>Regenerate Schedule</button>
+      </div>
       {/*  Schedule */}
       <div className="m-12 mt-0 p-4 rounded-4xl bg-gray-800">
         <div 
@@ -240,7 +267,7 @@ export default function Home() {
                 }}
               >
                 {sections.map((section, index) => (
-                  <Section key={index} id={section.id} subject={section.subject} level={section.level} timeBlockId={section.timeBlockId} days={section.days} studentIds={section.studentIds} teacherId={section.teacherId}></Section>
+                  <Section key={index} section={{id: section.id, subject: section.subject, level: section.level, timeBlockId: section.timeBlockId, days: section.days, studentIds: section.studentIds, teacherId: section.teacherId} as SectionProps} teachers={teacherData as TeacherProps[]}></Section>
                 ))}
               </div>
             );

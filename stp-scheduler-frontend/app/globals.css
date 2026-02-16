@@ -26,3 +26,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+body.waiting * {
+  cursor: wait !important; /* Use !important to override other styles */
+}
