@@ -9,6 +9,15 @@
  */
 
 /**
+ * TODO: Implement this
+ * Generates and returns an id string
+ * @returns string, "fake-id"
+ */
+export function generateId(){
+    return "fake-id";
+}
+
+/**
  * Sends a POST request to create a teacher in the backend
  * @param teacher 
  * @returns 

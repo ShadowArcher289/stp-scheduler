@@ -42,7 +42,8 @@ function writeToJson(filePath: string, newJsonData: string){
 export default function InputPage({path}: InputPageProps){
     const [teacherData, setTeacherData] = useState<string>("");
     const [studentData, setStudentData] = useState<string>("");
-
+    const [sectionData, setSectionData] = useState<string[]>([]);
+    const [sectionIds, setSectionIds] = useState<string[]>([]);
     /**
      * Handles file upload. Generated from Copilot
      * @param e 
@@ -88,6 +89,7 @@ export default function InputPage({path}: InputPageProps){
         }
     }
 
+    const [idsRetrieved, setIdsRetrieved] = useState<boolean>(false); // NOTE: Temporary
     /**
      * Runs fetch a request to retrieve specified data from the backend and calls to set the .json file to it
      */
@@ -107,18 +109,32 @@ export default function InputPage({path}: InputPageProps){
                 case "Teachers":
                     teacher_data = result;
                     // console.log("Teacher data:\n" + teacher_data.toString())
+                    // setTeacherData(teacher_data);
                     break;
                 
                 case "Students":
                     student_data = result;
                     // console.log("Student data:\n" + student_data.toString())
+                    // setStudentData(student_data);
                     break;
                 case "Sections":
+
+                    if(!idsRetrieved){ // TODO: temporary conditional, this should be updated so that the section ids are generated
+                        var ids: string[] = [];
+                        result.forEach((element: Record<string, any>) => {
+                            ids.push(element.id);
+                        });
+                        setSectionIds(ids);
+                        setIdsRetrieved(true);
+                    }
+                    
                     section_data = result;
+                    
                     section_data.forEach((element: { days: string[]; }) => { // REMOVE LATER: the backend does not set days, these lines should be removed once it does.
                         element.days = ["M", "T", "W", "R", "F"]; 
                     });
                     // console.log("Sections data:\n" + section_data.toString())
+                    
                     break;
             
                 default:
@@ -176,7 +192,7 @@ export default function InputPage({path}: InputPageProps){
             <p>{teacherData}</p>
             <p>{studentData}</p>
 
-            <CreateStudent></CreateStudent>
+            <CreateStudent scheduleSections={sectionIds}></CreateStudent>
         </div>
     );
 }
