@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import * as XLSX from '@e965/xlsx';
 import * as API from './SendToApi';
+import CreateStudent from './Creates/createStudent';
 
 /**
  * Author: Addison A
@@ -174,6 +175,8 @@ export default function InputPage({path}: InputPageProps){
 
             <p>{teacherData}</p>
             <p>{studentData}</p>
+
+            <CreateStudent></CreateStudent>
         </div>
     );
 }

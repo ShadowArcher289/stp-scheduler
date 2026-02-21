@@ -2,7 +2,7 @@
 
 import localData from "../data/BackendData.json";
 import Section from "./sectionCard";
-import InputPage, { teacher_data, student_data, section_data } from "./InputPage";
+import InputPage, { teacher_data, student_data, section_data } from "./inputPage";
 import { useEffect, useState } from "react";
 
 /**
