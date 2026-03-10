@@ -73,20 +73,22 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
         e.preventDefault(); // prevents page reload on form submission
         
         student_name = name;
-        subject_rankings = {"math:": mathScore, "english": englishScore, "asl": aslScore};
+        subject_rankings = {
+            "math": mathScore, 
+            "english": englishScore, 
+            "asl": aslScore};
         section_ids = sectionIds;
 
         console.log("Student Creation Initiated: ");
         console.log("student_name: " + student_name);
-        console.log("subject_ranking: " + JSON.stringify(subject_rankings));
+        console.log("subject_abilities: " + JSON.stringify(subject_rankings));
         console.log("section_ids: " + section_ids);
 
-        API.createStudent(JSON.stringify({
-            "id": API.generateId(), // TODO: Update to autogenerate ids
+        API.createStudent({
             "name": student_name,
-            "subject_rankings": subject_rankings,
-            "sectionIds": section_ids
-        }))
+            "subject_abilities": subject_rankings,
+            "section_ids": section_ids
+        })
 
         e.currentTarget.reset(); // reset the data
         setName("no_name");

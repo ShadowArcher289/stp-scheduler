@@ -45,6 +45,7 @@ export default function InputPage({path}: InputPageProps){
     const [studentData, setStudentData] = useState<string>("");
     const [sectionData, setSectionData] = useState<string[]>([]);
     const [sectionIds, setSectionIds] = useState<string[]>([]);
+    const [csvData, setCsvData] = useState<any>("");
     /**
      * Handles file upload. Generated from Copilot
      * @param e 
@@ -73,21 +74,20 @@ export default function InputPage({path}: InputPageProps){
             // Store JSON as a string so <p> can display it
             if(type.toLowerCase() === "teachers"){
                 setTeacherData(JSON.stringify(json, null, 2));
+                writeToJson(path, JSON.stringify(json));
             }
-            else{
+            else if(type.toLowerCase() === "csv"){
+                setCsvData(json);
+                API.updateFromCSV(json);
+            }
+            else if(type.toLowerCase() === "student"){
                 setStudentData(JSON.stringify(json, null, 2));
+                writeToJson(path, JSON.stringify(json));
             }
             
         };
 
         reader.readAsBinaryString(file);
-
-        if(type.toLowerCase() === "teachers"){
-            writeToJson(path, teacherData);
-        }
-        else{
-            writeToJson(path, studentData);
-        }
     }
 
     const [idsRetrieved, setIdsRetrieved] = useState<boolean>(false); // NOTE: Temporary
@@ -159,21 +159,6 @@ export default function InputPage({path}: InputPageProps){
             <button onClick={() => getFromBackendApi("Students")} className={"border-2 active:backdrop-brightness-90"}>Get Students data</button>
             <button onClick={() => getFromBackendApi("Sections")} className={"border-2 active:backdrop-brightness-90"}>Get Sections data</button> */}
 
-            <button onClick={() => API.createStudent(JSON.stringify({
-            "id": "2948ru3h-4908-4ed5-bd63-0041a6b8cb53",
-            "name": "Jackie Abbott",
-            "subject_rankings": {
-            "math": 4,
-            "english": 5,
-            "asl": 7
-            },
-            "sectionIds": [
-            "a2fa8d88-5b1a-4bad-976f-d07d4238ffb2",
-            "1fdef444-4c18-492a-8972-eab4f6dc6b5a",
-            "cc8711d1-b0fa-42c2-9c3d-8b3903c55d86"
-            ]
-        }))} className={"border-2 active:backdrop-brightness-90"}>Set new Student data</button>
-
             {/* <button onClick={() => getFromBackendApi("Timeblocks")} className={"border-2 active:backdrop-brightness-90"}>Get Timeblocks data</button> */}
             
             {/* User can input csv files*/}
@@ -186,6 +171,11 @@ export default function InputPage({path}: InputPageProps){
                 <br />
                 <label className={"p-2 pr-4"} >Submit Students:</label>
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
+            </form>
+            <form name="fileInput">
+                <br />
+                <label className={"p-2 pr-4"} >Submit Entire CSV:</label>
+                <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "csv")}/>
             </form>
 
             <br></br>

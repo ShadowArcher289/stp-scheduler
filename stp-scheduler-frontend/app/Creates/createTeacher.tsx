@@ -29,7 +29,7 @@ export default function CreateTeacher(){
         
         teacher_name = name;
         subject_weights = {
-            "math:": mathWeight, 
+            "math": mathWeight, 
             "english": englishWeight, 
             "asl": aslWeight, 
             "college readiness": collegeReadinessWeight, 
@@ -45,12 +45,11 @@ export default function CreateTeacher(){
         console.log("subject_weights: " + JSON.stringify(subject_weights));
         console.log("is_mentor: " + is_mentor);
 
-        API.createTeacher(JSON.stringify({
-            "id": API.generateId(), // TODO: Update to autogenerate ids
+        API.createTeacher({
             "name": teacher_name,
             "subject_weights": subject_weights,
             "is_mentor": is_mentor
-        }))
+        })
 
         e.currentTarget.reset(); // reset the data
         setName("no_name");

@@ -18,19 +18,38 @@ export function generateId(){
 }
 
 /**
- * Sends a POST request to create a teacher in the backend
- * @param teacher 
- * @returns 
+ * Sends a POST request to update the data in the backend given an entire csv file
+ * @param csvData 
  */
-export function createTeacher(teacher: string){
+export function updateFromCSV(csvData: any){
     var result: any;
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: teacher
+        body: JSON.stringify(csvData)
     };
 
-    fetch('http://localhost:8000', requestOptions)
+    fetch('http://localhost:8000/update/csv', requestOptions)
+        .then(response => response.json())
+        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+
+    return result;
+}
+
+/**
+ * Sends a POST request to create a teacher in the backend
+ * @param teacher 
+ * @returns 
+ */
+export function createTeacher(teacher: any){
+    var result: any;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(teacher)
+    };
+
+    fetch('http://localhost:8000/create/teacher', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
 
@@ -42,7 +61,7 @@ export function createTeacher(teacher: string){
  * @param student 
  * @returns 
  */
-export function createStudent(student: string){
+export function createStudent(student: any){
     var result: any;
 
     const requestOptions = {
@@ -51,7 +70,7 @@ export function createStudent(student: string){
         body: JSON.stringify(student)
     };
 
-    fetch('http://localhost:8000/', requestOptions)
+    fetch('http://localhost:8000/create/student', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
         
@@ -72,7 +91,7 @@ export function createSection(section: string){
         body: section
     };
 
-    fetch('http://localhost:8000/', requestOptions)
+    fetch('http://localhost:8000/create/section', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
     
@@ -93,7 +112,7 @@ export function createTimeblock(timeblock: string){
         body: timeblock
     };
 
-    fetch('http://localhost:8000/', requestOptions)
+    fetch('http://localhost:8000/create/timeblock', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
 
