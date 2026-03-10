@@ -1,4 +1,3 @@
-import { match } from "assert";
 import { ChangeEvent, FormEvent, useState } from "react";
 import * as API from '.././SendToApi';
 
@@ -39,7 +38,7 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
         console.log(selectedSections);
     }
     /**
-     * 
+     * Adds a section from the user's selection
      * @param sectionId string, id of the section to add
      */
     function addSection(sectionId: string){
@@ -48,7 +47,7 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
     }
 
     /**
-     *
+     * Removes a section from the user's selection
      * @param sectionId string, id of the section to remove
      */
     function removeSection(sectionId: string){
@@ -94,52 +93,49 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
         setMathScore(5);
         setEnglishScore(5);
         setAslScore(5);
-
     }
 
     return (
-        <div className={"border-2 p-2"}>
-            CreateStudent
-            <form name="createStudentForm" onSubmit={(e) => createStudent(e)}>
-                <br />
-                <label className={"p-2 pr-4"} >Name:</label>
-                <input type="text" id="name" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}/>
-                <br />
-                <label className={"p-2 pr-4"} >Math Rank: {mathScore}</label>
-                <input type="range" min={minRank} max={maxRank} id="mathRank" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setMathScore(Number(e.currentTarget.value))}/>
-                <br />
-                <label className={"p-2 pr-4"} >English Rank: {englishScore}</label>
-                <input type="range" min={minRank} max={maxRank} id="englishRank" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setEnglishScore(Number(e.currentTarget.value))}/>
-                <br />
-                <label className={"p-2 pr-4"} >ASL Rank: {aslScore}</label>    
-                <input type="range" min={minRank} max={maxRank} id="aslRank" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setAslScore(Number(e.currentTarget.value))}/>
-                <br />
+        <details>
+            <summary> Create Student (Click to collapse/expand)</summary>
+            <div className={"border-2 p-4 m-4 ml-0 border-white/50"}>
+                <form name="createStudentForm" onSubmit={(e) => createStudent(e)}>
+                    <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}/>
+                    <label className={"p-2 pr-4"} >Student Name</label>
+                    <br />
+                    <input type="range" min={minRank} max={maxRank} id="mathRank" className={"border-2 p-1 ml-4"} onChange={(e) => setMathScore(Number(e.currentTarget.value))}/>
+                    <label className={"p-2 pr-4"} >{mathScore} : Math Rank</label>
+                    <br />
+                    <input type="range" min={minRank} max={maxRank} id="englishRank" className={"border-2 p-1 ml-4"} onChange={(e) => setEnglishScore(Number(e.currentTarget.value))}/>
+                    <label className={"p-2 pr-4"} >{englishScore} : English Rank</label>
+                    <br />
+                    <input type="range" min={minRank} max={maxRank} id="aslRank" className={"border-2 p-1 ml-4"} onChange={(e) => setAslScore(Number(e.currentTarget.value))}/>
+                    <label className={"p-2 pr-4 "} >{aslScore} : ASL Rank</label>    
+                    <br />
 
-                {/* TODO: somehow let the user pick all the sections for this student to be in. Ideally something visual, perhaps getting the sections data in a mini-calendar and letting the user click(select) their desired ones. */}
-                <label className={"p-2 pr-4"} >Sections:</label> 
-                {/* <input type="text" id="sections" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}/> */}
-                
-                {/* Generate list of all selectable sections */}
-                <div className={"border-2 m-4 pt-4 pb-4"}>
-                    {Object.entries(scheduleSections).map(([key, value]) => {
+                    <label className={"p-2 pr-4"} >Sections:</label> 
+                    {/* <input type="text" id="sections" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}/> */}
+                    
+                    {/* Generate list of all selectable sections */}
+                    <div className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
+                        {Object.entries(scheduleSections).map(([key, value]) => {
 
-                        // incrementSectionCount();
-                        // const [day, timeBlockId] = key.split("-");
-                        return (
-                            <div key={key} className="mb-2 border-b">
-                                <input type="checkbox" id={value} value={value} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
-                                <label className={"p-2 pr-4 pl-6"} >{value}</label>    
-                            </div>
-                        );
-                    })
-                    }
-                </div>
-                {/* <input type="checkbox" id="sections" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}/> */}
+                            // incrementSectionCount();
+                            // const [day, timeBlockId] = key.split("-");
+                            return (
+                                <div key={key} className="mb-2 border-b border-white/50">
+                                    <input type="checkbox" id={value} value={value} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
+                                    <label className={"p-2 pr-4 pl-6"} >{value}</label>    
+                                </div>
+                            );
+                        })
+                        }
+                    </div>
+                    {/* <input type="checkbox" id="sections" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}/> */}
 
-                <br />
-                <button type="submit" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>
-            </form>
-            
-        </div>
+                    <button type="submit" className={"border-2 p-1 ml-4 w-35 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>
+                </form>
+            </div>
+        </details>
     );
 }

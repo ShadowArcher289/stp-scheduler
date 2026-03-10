@@ -4,6 +4,7 @@ import { useState } from 'react';
 import * as XLSX from '@e965/xlsx';
 import * as API from './SendToApi';
 import CreateStudent from './Creates/createStudent';
+import CreateTeacher from './Creates/createTeacher';
 
 /**
  * Author: Addison A
@@ -193,6 +194,7 @@ export default function InputPage({path}: InputPageProps){
             <p>{studentData}</p>
 
             <CreateStudent scheduleSections={sectionIds}></CreateStudent>
+            <CreateTeacher></CreateTeacher>
         </div>
     );
 }

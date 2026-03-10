@@ -22,7 +22,7 @@ export function generateId(){
  * @param teacher 
  * @returns 
  */
-export function sendTeacher(teacher: string){
+export function createTeacher(teacher: string){
     var result: any;
     const requestOptions = {
         method: 'POST',
@@ -30,7 +30,7 @@ export function sendTeacher(teacher: string){
         body: teacher
     };
 
-    fetch('https://localhost:8000', requestOptions)
+    fetch('http://localhost:8000', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
 
