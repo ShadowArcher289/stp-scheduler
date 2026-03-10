@@ -64,6 +64,7 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
     /**
      * Create a student
      * 
+     * @param e FormEvent<HTMLFormElement>
      * @param student_name unused
      * @param subject_rankings unused
      * @param section_ids unused

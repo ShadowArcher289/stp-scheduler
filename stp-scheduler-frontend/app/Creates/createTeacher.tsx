@@ -19,6 +19,10 @@ export default function CreateTeacher(){
     /**
      * Create a teacher
      * 
+     * @param e FormEvent<HTMLFormElement>
+     * @param teacher_name 
+     * @param subject_weights 
+     * @param is_mentor 
      */
     function createTeacher(e: FormEvent<HTMLFormElement>, teacher_name: string = "", subject_weights: Record<string, number> = {}, is_mentor: boolean = false){
         e.preventDefault(); // prevents page reload on form submission
