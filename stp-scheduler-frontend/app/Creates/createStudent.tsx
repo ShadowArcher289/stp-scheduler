@@ -105,13 +105,13 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
                     <label className={"p-2 pr-4"} >Student Name</label>
                     <br />
                     <input type="range" min={minRank} max={maxRank} id="mathRank" className={"border-2 p-1 ml-4"} onChange={(e) => setMathScore(Number(e.currentTarget.value))}/>
-                    <label className={"p-2 pr-4"} >{mathScore} : Math Rank</label>
+                    <label className={"p-2 pr-4"} >{mathScore} : Math Ability Level</label>
                     <br />
                     <input type="range" min={minRank} max={maxRank} id="englishRank" className={"border-2 p-1 ml-4"} onChange={(e) => setEnglishScore(Number(e.currentTarget.value))}/>
-                    <label className={"p-2 pr-4"} >{englishScore} : English Rank</label>
+                    <label className={"p-2 pr-4"} >{englishScore} : English Ability Level</label>
                     <br />
                     <input type="range" min={minRank} max={maxRank} id="aslRank" className={"border-2 p-1 ml-4"} onChange={(e) => setAslScore(Number(e.currentTarget.value))}/>
-                    <label className={"p-2 pr-4 "} >{aslScore} : ASL Rank</label>    
+                    <label className={"p-2 pr-4 "} >{aslScore} : ASL Ability Level</label>    
                     <br />
 
                     <label className={"p-2 pr-4"} >Sections:</label> 
