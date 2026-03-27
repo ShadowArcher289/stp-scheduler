@@ -30,3 +30,7 @@ body {
 body.waiting * {
   cursor: wait !important; /* Use !important to override other styles */
 }
+
+summary:hover {
+  brightness: brightness(125%);
+}

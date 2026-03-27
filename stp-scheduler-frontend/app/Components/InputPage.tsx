@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from '@e965/xlsx';
 import * as API from '../SendToApi';
-import CreateStudent from '../Creates/createStudent';
-import CreateTeacher from '../Creates/createTeacher';
+import CreateStudent from '../Cruds/createStudent';
+import CreateTeacher from '../Cruds/createTeacher';
 import * as GetAPI from "./../GetFromApi";
+import EditStudent from '../Cruds/editStudent';
+import EditTeacher from '../Cruds/editTeacher';
 
 
 /**
@@ -193,6 +195,8 @@ export default function InputPage({path}: InputPageProps){
 
             <CreateStudent scheduleSections={sectionIds}></CreateStudent>
             <CreateTeacher></CreateTeacher>
+            <EditStudent scheduleSections={sectionIds}></EditStudent>
+            <EditTeacher></EditTeacher>
         </div>
     );
 }

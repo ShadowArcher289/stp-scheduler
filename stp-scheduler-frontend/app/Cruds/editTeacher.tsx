@@ -1,10 +1,10 @@
 import { FormEvent, useState } from "react";
-import * as API from '.././SendToApi';
+import * as API from '../SendToApi';
 
 var minWeight = "-1";
 var maxWeight = "1";
 
-export default function CreateTeacher(){
+export default function EditTeacher(){
     const [name, setName] = useState<string>("no_name");
     const [isMentor, setIsMentor] = useState<boolean>(false);
     const [mathWeight, setMathWeight] = useState<number>(0);
@@ -17,14 +17,14 @@ export default function CreateTeacher(){
     const [digitalLitWeight, setDigitalLithWeight] = useState<number>(0);
 
     /**
-     * Create a teacher
+     * Edit a teacher
      * 
      * @param e FormEvent<HTMLFormElement>
      * @param teacher_name 
      * @param subject_weights 
      * @param is_mentor 
      */
-    function createTeacher(e: FormEvent<HTMLFormElement>, teacher_name: string = "", subject_weights: Record<string, number> = {}, is_mentor: boolean = false){
+    function editTeacher(e: FormEvent<HTMLFormElement>, teacher_name: string = "", subject_weights: Record<string, number> = {}, is_mentor: boolean = false){
         e.preventDefault(); // prevents page reload on form submission
         
         teacher_name = name;
@@ -45,7 +45,7 @@ export default function CreateTeacher(){
         console.log("subject_weights: " + JSON.stringify(subject_weights));
         console.log("is_mentor: " + is_mentor);
 
-        API.createTeacher({
+        API.editTeacher({
             "name": teacher_name,
             "subject_weights": subject_weights,
             "is_mentor": is_mentor
@@ -67,9 +67,9 @@ export default function CreateTeacher(){
     
     return (
         <details className="mb-4">
-            <summary>Create Instructor (Click to collapse/expand)</summary>
+            <summary className="hover:backdrop-brightness-125 p-4">Edit Instructor (Click to collapse/expand)</summary>
             <div className={"border-2 p-2 m-4 border-white/50"}>
-                <form name="createTeacherForm" onSubmit={(e) => createTeacher(e)}>
+                <form name="createTeacherForm" onSubmit={(e) => editTeacher(e)}>
                     <br />
                     <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}/>
                     <label className={"p-2 pr-4"} > Instructor Name</label>
