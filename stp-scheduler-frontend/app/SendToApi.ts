@@ -57,6 +57,26 @@ export function createTeacher(teacher: any){
 }
 
 /**
+ * Sends a PUT request to edit a teacher in the backend
+ * @param teacher 
+ * @returns 
+ */
+export function editTeacher(teacher: any){
+    var result: any;
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(teacher)
+    };
+
+    fetch('http://localhost:8000/edit/teacher', requestOptions)
+        .then(response => response.json())
+        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+
+    return result;
+}
+
+/**
  * Sends a POST request to create a student in the backend
  * @param student 
  * @returns 
@@ -71,6 +91,27 @@ export function createStudent(student: any){
     };
 
     fetch('http://localhost:8000/create/student', requestOptions)
+        .then(response => response.json())
+        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+        
+    return result;
+}
+
+/**
+ * Sends a PUT request to edit a student in the backend
+ * @param student 
+ * @returns 
+ */
+export function editStudent(student: any){
+    var result: any;
+
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(student)
+    };
+
+    fetch('http://localhost:8000/edit/student', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
         
