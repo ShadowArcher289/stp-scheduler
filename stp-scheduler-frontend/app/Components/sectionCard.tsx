@@ -95,11 +95,13 @@ export default function Section(
             {getTeacherName(teachers as Array<TeacherProps>, section.teacherId)} - {getSectionLevel(section.level)} {section.subject.charAt(0).toUpperCase() + section.subject.slice(1)}
             <br />
             <br />
+            <ul className="list-decimal text-left">
             {
                 section.studentIds.map((id) => (
-                    <div key={id}>{getStudentName(students, id)}</div>
+                    <li key={id}> {getStudentName(students, id)}</li>
                 ))
             }
+            </ul>
         </div>
     );
 }
