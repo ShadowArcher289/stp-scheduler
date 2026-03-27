@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import * as XLSX from '@e965/xlsx';
-import * as API from './SendToApi';
-import CreateStudent from './Creates/createStudent';
-import CreateTeacher from './Creates/createTeacher';
+import * as API from '../SendToApi';
+import CreateStudent from '../Creates/createStudent';
+import CreateTeacher from '../Creates/createTeacher';
 
 /**
  * Author: Addison A
@@ -164,7 +164,7 @@ export default function InputPage({path}: InputPageProps){
             {/* User can input csv files*/}
             <form name="fileInput">
                 <br />
-                <label className={"p-2 pr-4"} >Submit Teachers:</label>
+                <label className={"p-2 pr-4"} >Submit Instructors:</label>
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
             </form>
             <form name="fileInput">

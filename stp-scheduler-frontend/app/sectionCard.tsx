@@ -10,6 +10,7 @@ import localData from "../data/BackendData.json";
 interface SectionCardProps{
     section: SectionProps
     teachers: TeacherProps[]
+    students: StudentProps[]
 }
 
 /**
@@ -48,6 +49,17 @@ function getTeacherName(teachers: Array<TeacherProps>, teacherId: string): strin
     }
 }
 
+function getStudentName(students: Array<StudentProps>, studentId: string): string{
+    const match = students.find(student => student.id === studentId); // find the matching student
+
+    if(match){ // if not unidentified, then return the name
+        return match.name;
+    }
+    else{
+        return "";
+    }
+}
+
 function getSectionLevel(level: number): string{
     switch(level){
         case 0:
@@ -71,16 +83,23 @@ export default function Section(
     //     studentIds, 
     //     teacherId
     // }: SectionProps, teachers: TeacherProps[]
-    {section, teachers}: SectionCardProps
+    {section, teachers, students}: SectionCardProps
 ){
     return(
         <div 
-            className="flex grow col-span-1 row-span-1 p-5 text-lg justify-center items-center rounded-2xl"
+            className="flex grow col-span-1 row-span-1 p-5 text-lg justify-center items-center rounded-2xl flex-col"
             style={{
                 backgroundColor: getBackgroundColor(section.subject),
             }}
         >
             {getTeacherName(teachers as Array<TeacherProps>, section.teacherId)} - {getSectionLevel(section.level)} {section.subject.charAt(0).toUpperCase() + section.subject.slice(1)}
+            <br />
+            <br />
+            {
+                section.studentIds.map((id) => (
+                    <div key={id}>{getStudentName(students, id)}</div>
+                ))
+            }
         </div>
     );
 }

@@ -1,8 +1,8 @@
 'use client'
 
 import localData from "../data/BackendData.json";
+import InputPage, { section_data, student_data, teacher_data } from "./Components/InputPage";
 import Section from "./sectionCard";
-import InputPage, { teacher_data, student_data, section_data } from "./inputPage";
 import { useEffect, useState } from "react";
 
 /**
@@ -219,9 +219,7 @@ export default function Home() {
 
     <section className="min-h-screen items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
       {/* Inputs */}
-      <InputPage path={"../data/InputTestData.json"}></InputPage>
-
-      <br></br>
+      {/* <InputPage path={"../data/InputTestData.json"}></InputPage> */}
 
       <div className={"p-4 pl-16 mb-4 border-b-2 bg-[#f76902] text-white"}>
         <button onClick={generateSchedule} className={"border-2 active:backdrop-brightness-90 p-2 pr-4"}>Regenerate Schedule</button>
@@ -267,7 +265,7 @@ export default function Home() {
                 }}
               >
                 {sections.map((section, index) => (
-                  <Section key={index} section={{id: section.id, subject: section.subject, level: section.level, timeBlockId: section.timeBlockId, days: section.days, studentIds: section.studentIds, teacherId: section.teacherId} as SectionProps} teachers={teacherData as TeacherProps[]}></Section>
+                  <Section key={index} section={section as SectionProps} teachers={teacherData as TeacherProps[]} students={studentData as StudentProps[]}></Section>
                 ))}
               </div>
             );
