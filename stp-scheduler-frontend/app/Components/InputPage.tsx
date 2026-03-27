@@ -1,22 +1,19 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as XLSX from '@e965/xlsx';
-import * as API from './SendToApi';
-import CreateStudent from './Creates/createStudent';
-import CreateTeacher from './Creates/createTeacher';
+import * as API from '../SendToApi';
+import CreateStudent from '../Creates/createStudent';
+import CreateTeacher from '../Creates/createTeacher';
+import * as GetAPI from "./../GetFromApi";
+
 
 /**
  * Author: Addison A
- * Last Updated: 2/20/2026
+ * Last Updated: 3/27/2026
  * 
  * Editors: 
  */
-
-export var teacher_data: any = [];
-export var student_data: any = [];
-export var section_data: any = [];
-
 
 interface InputPageProps {
     path: string;
@@ -74,6 +71,7 @@ export default function InputPage({path}: InputPageProps){
             // Store JSON as a string so <p> can display it
             if(type.toLowerCase() === "teachers"){
                 setTeacherData(JSON.stringify(json, null, 2));
+                GetAPI.setGlobalTeacherData(JSON.stringify(json, null, 2))
                 writeToJson(path, JSON.stringify(json));
             }
             else if(type.toLowerCase() === "csv"){
@@ -82,6 +80,7 @@ export default function InputPage({path}: InputPageProps){
             }
             else if(type.toLowerCase() === "student"){
                 setStudentData(JSON.stringify(json, null, 2));
+                GetAPI.setGlobalStudentData(JSON.stringify(json, null, 2))
                 writeToJson(path, JSON.stringify(json));
             }
             
@@ -90,67 +89,76 @@ export default function InputPage({path}: InputPageProps){
         reader.readAsBinaryString(file);
     }
 
-    const [idsRetrieved, setIdsRetrieved] = useState<boolean>(false); // NOTE: Temporary
     /**
      * Runs fetch a request to retrieve specified data from the backend and calls to set the .json file to it
      */
-    async function getFromBackendApi(type: string){
-        try {
-            const response = await fetch('http://localhost:8000/' + type.toLowerCase());
+    // async function getFromBackendApi(type: string){
+    //     try {
+    //         const response = await fetch('http://localhost:8000/' + type.toLowerCase());
 
-            if (!response.ok) { 
-                throw new Error(`HTTP error! status: ${response.status}`); 
-            }
+    //         if (!response.ok) { 
+    //             throw new Error(`HTTP error! status: ${response.status}`); 
+    //         }
 
-            const result = await response.json();
-            console.log(result);
-            writeToJson("..\\data\\actualData\\" + type + ".json", result);
+    //         const result = await response.json();
+    //         console.log(result);
+    //         writeToJson("..\\data\\actualData\\" + type + ".json", result);
 
-            switch (type) {
-                case "Teachers":
-                    teacher_data = result;
-                    // console.log("Teacher data:\n" + teacher_data.toString())
-                    // setTeacherData(teacher_data);
-                    break;
+    //         switch (type) {
+    //             case "Teachers":
+    //                 teacher_data = result;
+    //                 // console.log("Teacher data:\n" + teacher_data.toString())
+    //                 // setTeacherData(teacher_data);
+    //                 break;
                 
-                case "Students":
-                    student_data = result;
-                    // console.log("Student data:\n" + student_data.toString())
-                    // setStudentData(student_data);
-                    break;
-                case "Sections":
+    //             case "Students":
+    //                 student_data = result;
+    //                 // console.log("Student data:\n" + student_data.toString())
+    //                 // setStudentData(student_data);
+    //                 break;
+    //             case "Sections":
 
-                    if(!idsRetrieved){ // TODO: temporary conditional, this should be updated so that the section ids are generated
-                        var ids: string[] = [];
-                        result.forEach((element: Record<string, any>) => {
-                            ids.push(element.id);
-                        });
-                        setSectionIds(ids);
-                        setIdsRetrieved(true);
-                    }
+    //                 if(!idsRetrieved){ // TODO: temporary conditional, this should be updated so that the section ids are generated
+    //                     var ids: string[] = [];
+    //                     result.forEach((element: Record<string, any>) => {
+    //                         ids.push(element.id);
+    //                     });
+    //                     setSectionIds(ids);
+    //                     setIdsRetrieved(true);
+    //                 }
                     
-                    section_data = result;
+    //                 section_data = result;
                     
-                    section_data.forEach((element: { days: string[]; }) => { // REMOVE LATER: the backend does not set days, these lines should be removed once it does.
-                        element.days = ["M", "T", "W", "R", "F"]; 
-                    });
-                    // console.log("Sections data:\n" + section_data.toString())
+    //                 section_data.forEach((element: { days: string[]; }) => { // REMOVE LATER: the backend does not set days, these lines should be removed once it does.
+    //                     element.days = ["M", "T", "W", "R", "F"]; 
+    //                 });
+    //                 // console.log("Sections data:\n" + section_data.toString())
                     
-                    break;
+    //                 break;
             
-                default:
-                    break;
-            }
+    //             default:
+    //                 break;
+    //         }
 
 
-        } catch (err) {
-            console.log("ERROR: The backend did not retrieve data: " + err);
-        }
-    }
+    //     } catch (err) {
+    //         console.log("ERROR: The backend did not retrieve data: " + err);
+    //     }
+    // }
 
-    getFromBackendApi("Teachers");
-    getFromBackendApi("Students");
-    getFromBackendApi("Sections");
+
+    /**
+     * calls the GetAPI to repopulate its data
+     */
+    useEffect(() => {
+        GetAPI.getFromBackendApi("Teachers");
+        GetAPI.getFromBackendApi("Students");
+        GetAPI.getFromBackendApi("Sections");
+
+        setSectionIds(GetAPI.section_ids);
+    }, [])
+    
+
 
     // Contains functions for retrieving data 
     return(
@@ -164,7 +172,7 @@ export default function InputPage({path}: InputPageProps){
             {/* User can input csv files*/}
             <form name="fileInput">
                 <br />
-                <label className={"p-2 pr-4"} >Submit Teachers:</label>
+                <label className={"p-2 pr-4"} >Submit Instructors:</label>
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
             </form>
             <form name="fileInput">

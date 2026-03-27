@@ -99,7 +99,7 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
     }
 
     return (
-        <details>
+        <details className="mb-4">
             <summary> Create Student (Click to collapse/expand)</summary>
             <div className={"border-2 p-4 m-4 ml-0 border-white/50"}>
                 <form name="createStudentForm" onSubmit={(e) => createStudent(e)}>
