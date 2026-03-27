@@ -2,7 +2,7 @@
 
 import localData from "../data/BackendData.json";
 import InputPage, { section_data, student_data, teacher_data } from "./Components/InputPage";
-import Section from "./sectionCard";
+import Section from "./Components/sectionCard";
 import { useEffect, useState } from "react";
 
 /**
@@ -217,18 +217,19 @@ export default function Home() {
 
   return (
 
-    <section className="min-h-screen items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
+    <section className="min-h-screen min-w-dvw items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
       {/* Inputs */}
       {/* <InputPage path={"../data/InputTestData.json"}></InputPage> */}
 
       <div className={"p-4 pl-16 mb-4 border-b-2 bg-[#f76902] text-white"}>
         <button onClick={generateSchedule} className={"border-2 active:backdrop-brightness-90 p-2 pr-4"}>Regenerate Schedule</button>
       </div>
+
       {/*  Schedule */}
       <div className="m-12 mt-0 p-4 rounded-4xl bg-gray-800">
         <div 
           id="schedule" 
-          className="grid grid-cols-[10rem_repeat(5,1fr)] grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-xl rounded-4xl"
+          className="grid grid-cols-[10rem_repeat(5,1fr)] grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-base rounded-4xl"
           // grid-rows-[4rem_repeat(11,1fr)]
           style={{
             gridTemplateRows: `4rem repeat(${timeblockData.length}, 1fr)`
@@ -245,7 +246,7 @@ export default function Home() {
 
           {/* Fill in the time on the left */}
           {timeblockData.map(time => (
-            <div key={time.id} className="flex justify-center text-center items-center p-3 col-start-1 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-b-2 border-t-0 border-l-0 border-solid">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
+            <div key={time.id} className="flex justify-center text-center items-center p-1 col-start-1 col-span-1 bg-[var(--main-background-color)] text-[var(--main-text-color)] border-3 border-b-2 border-t-0 border-l-0 border-solid">{militaryToCivilianTime(time.start)} - {militaryToCivilianTime(time.end)}</div>
           ))}
 
 

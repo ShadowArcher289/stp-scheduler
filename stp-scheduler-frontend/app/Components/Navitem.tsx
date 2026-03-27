@@ -19,7 +19,7 @@ export default function NavItem(
         data-label={navItem.title}
         href={navItem.route}
         className={`flex-grow bold-pseudo ${pathname === navItem.route ? "font-semibold text-primary" : ""}
-                        p-2`}
+                        p-2 pl-4 pr-4`}
     >
         {navItem.title}
     </Link>

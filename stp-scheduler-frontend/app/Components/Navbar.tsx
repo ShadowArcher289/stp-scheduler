@@ -9,6 +9,18 @@ const navItems: NavItemProps[] = [
     {
         title: "Management",
         route: "/management",
+    },
+    {
+        title: "Students",
+        route: "/students",
+    },
+    {
+        title: "Teachers",
+        route: "/teachers",
+    },
+    {
+        title: "Sections",
+        route: "/sections",
     }
 ];
 

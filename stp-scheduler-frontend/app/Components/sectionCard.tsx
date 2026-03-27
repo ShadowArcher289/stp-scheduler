@@ -1,4 +1,4 @@
-import localData from "../data/BackendData.json";
+import localData from "../../data/BackendData.json";
 
 /**
  * Author: Addison A
@@ -87,7 +87,7 @@ export default function Section(
 ){
     return(
         <div 
-            className="flex grow col-span-1 row-span-1 p-5 text-lg justify-center items-center rounded-2xl flex-col"
+            className="flex grow col-span-1 row-span-1 p-5 text-sm justify-center items-center rounded-2xl flex-col"
             style={{
                 backgroundColor: getBackgroundColor(section.subject),
             }}

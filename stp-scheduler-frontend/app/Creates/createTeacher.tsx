@@ -66,7 +66,7 @@ export default function CreateTeacher(){
     }
     
     return (
-        <details>
+        <details className="mb-4">
             <summary>Create Instructor (Click to collapse/expand)</summary>
             <div className={"border-2 p-2 m-4 border-white/50"}>
                 <form name="createTeacherForm" onSubmit={(e) => createTeacher(e)}>
