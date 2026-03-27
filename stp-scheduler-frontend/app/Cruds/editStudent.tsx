@@ -1,5 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
+import { student_data } from "../GetFromApi";
+import { getStudentName } from "../HelperFunctions";
 
 interface CreateStudentProps{
     scheduleSections: string[];
@@ -13,6 +15,9 @@ var minRank = "0";
 var maxRank = "10";
 
 export default function EditStudent({scheduleSections}: CreateStudentProps){
+    const [students, setStudents] = useState<StudentProps[]>([])
+
+    const [id, setId] = useState<string>("");
     const [name, setName] = useState<string>("no_name");
     const [mathScore, setMathScore] = useState<number>(5);
     const [englishScore, setEnglishScore] = useState<number>(5);
@@ -63,13 +68,14 @@ export default function EditStudent({scheduleSections}: CreateStudentProps){
      * Edit a student
      * 
      * @param e FormEvent<HTMLFormElement>
-     * @param student_name unused
+     * @param student_id unused
      * @param subject_rankings unused
      * @param section_ids unused
      */
-    function editStudent(e: FormEvent<HTMLFormElement>, student_name: string = "", subject_rankings: Record<string, number> = {}, section_ids: string[] = []){
+    function editStudent(e: FormEvent<HTMLFormElement>, student_id: string = "", student_name: string = "", subject_rankings: Record<string, number> = {}, section_ids: string[] = []){
         e.preventDefault(); // prevents page reload on form submission
         
+        student_id = id;
         student_name = name;
         subject_rankings = {
             "math": mathScore, 
@@ -79,31 +85,54 @@ export default function EditStudent({scheduleSections}: CreateStudentProps){
 
         console.log("Student Creation Initiated: ");
         console.log("student_name: " + student_name);
+        console.log("student_id: " + student_id);
         console.log("subject_abilities: " + JSON.stringify(subject_rankings));
         console.log("section_ids: " + section_ids);
 
         API.editStudent({
+            "id": student_id,
             "name": student_name,
             "subject_abilities": subject_rankings,
             "section_ids": section_ids
         })
 
         e.currentTarget.reset(); // reset the data
+        setId("");
         setName("no_name");
         setSectionIds([]);
         setMathScore(5);
         setEnglishScore(5);
         setAslScore(5);
     }
+    
+    useEffect(() => {
+        setStudents(student_data)
+    }, []);
 
     return (
         <details className="mb-4">
             <summary className="hover:backdrop-brightness-125 p-4"> Edit Student (Click to collapse/expand)</summary>
             <div className={"border-2 p-4 m-4 ml-0 border-white/50"}>
-                <form name="createStudentForm" onSubmit={(e) => editStudent(e)}>
+                <form name="editStudentForm" onSubmit={(e) => editStudent(e)}>
+                    <select className={"border-2 m-4 pt-4 pb-4 border-white/50"} onChange={(e) => {setId(e.target.value), setName(getStudentName(students, e.target.value))}}>
+                        <option className="mb-2 border-b border-white/50 text-gray" value="">
+                        ...
+                        </option>
+                        {Object.entries(students).map(([key, student]) => {
+
+                            return (
+                                <option key={key} className="mb-2 border-b border-white/50 text-black" value={student.id}>
+                                    {student.name} | {student.id}   
+                                </option>
+                            );
+                        })
+                        }
+                    </select>
+
                     <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}/>
                     <label className={"p-2 pr-4"} >Student Name</label>
                     <br />
+
                     <input type="range" min={minRank} max={maxRank} id="mathRank" className={"border-2 p-1 ml-4"} onChange={(e) => setMathScore(Number(e.currentTarget.value))}/>
                     <label className={"p-2 pr-4"} >{mathScore} : Math Ability Level</label>
                     <br />

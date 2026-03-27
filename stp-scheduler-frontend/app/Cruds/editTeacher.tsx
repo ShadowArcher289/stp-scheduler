@@ -1,10 +1,20 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
+import { teacher_data } from "../GetFromApi";
+import { getTeacherName } from "../HelperFunctions";
 
+interface CreateTEacherProps{
+    scheduleSections: string[];
+}
+
+var selectedSections: string[] = [];
 var minWeight = "-1";
 var maxWeight = "1";
 
-export default function EditTeacher(){
+export default function EditTeacher({scheduleSections}: CreateTEacherProps){
+    const [teachers, setTeachers] = useState<TeacherProps[]>([])
+
+    const [id, setId] = useState<string>("");
     const [name, setName] = useState<string>("no_name");
     const [isMentor, setIsMentor] = useState<boolean>(false);
     const [mathWeight, setMathWeight] = useState<number>(0);
@@ -15,7 +25,46 @@ export default function EditTeacher(){
     const [financialLitWeight, setFinancialLitWeight] = useState<number>(0);
     const [presentationsWeight, setPresentationsWeight] = useState<number>(0);
     const [digitalLitWeight, setDigitalLithWeight] = useState<number>(0);
+    const [sectionIds, setSectionIds] = useState<string[]>([]);
 
+    /**
+     * Calls the helper functions that updates the section lists.
+     * @param e ChangeEvent<HTMLInputElement>, check event
+     * @param value string, the section id
+     */
+    function updateSections(e: ChangeEvent<HTMLInputElement>, value: string): void {
+        if(e.target.checked){
+            addSection(value);
+        }
+        else{
+            removeSection(value);
+        }
+        console.log(selectedSections);
+    }
+    /**
+     * Adds a section from the user's selection
+     * @param sectionId string, id of the section to add
+     */
+    function addSection(sectionId: string){
+        selectedSections.push(sectionId);
+        setSectionIds(selectedSections);
+    }
+
+    /**
+     * Removes a section from the user's selection
+     * @param sectionId string, id of the section to remove
+     */
+    function removeSection(sectionId: string){
+        try {
+            if(selectedSections.includes(sectionId)){
+                selectedSections.splice(selectedSections.indexOf(sectionId), 1);
+                setSectionIds(selectedSections);
+            }
+        } catch (err) {
+            console.error("Error: " + err);
+        }
+    }
+    
     /**
      * Edit a teacher
      * 
@@ -24,9 +73,10 @@ export default function EditTeacher(){
      * @param subject_weights 
      * @param is_mentor 
      */
-    function editTeacher(e: FormEvent<HTMLFormElement>, teacher_name: string = "", subject_weights: Record<string, number> = {}, is_mentor: boolean = false){
+    function editTeacher(e: FormEvent<HTMLFormElement>, teacher_id: string = "", teacher_name: string = "", subject_weights: Record<string, number> = {}, is_mentor: boolean = false, section_ids: string[] = []){
         e.preventDefault(); // prevents page reload on form submission
         
+        teacher_id = id;
         teacher_name = name;
         subject_weights = {
             "math": mathWeight, 
@@ -39,19 +89,24 @@ export default function EditTeacher(){
             "digital lit": digitalLitWeight
         };
         is_mentor = isMentor;
+        section_ids = sectionIds;
 
         console.log("Teacher Creation Initiated: ");
+        console.log("teacher_id: " + teacher_id);
         console.log("teacher_name: " + teacher_name);
         console.log("subject_weights: " + JSON.stringify(subject_weights));
         console.log("is_mentor: " + is_mentor);
+        console.log("section_ids: " + section_ids);
 
         API.editTeacher({
+            "teacher_id": teacher_id,
             "name": teacher_name,
             "subject_weights": subject_weights,
             "is_mentor": is_mentor
         })
 
         e.currentTarget.reset(); // reset the data
+        setId("");
         setName("no_name");
         setIsMentor(false);
         setMathWeight(0);
@@ -62,14 +117,36 @@ export default function EditTeacher(){
         setFinancialLitWeight(0);
         setPresentationsWeight(0);
         setDigitalLithWeight(0);
+        setSectionIds([]);
 
     }
     
+    useEffect(() => {
+        setTeachers(teacher_data)
+    }, []);
+
     return (
         <details className="mb-4">
             <summary className="hover:backdrop-brightness-125 p-4">Edit Instructor (Click to collapse/expand)</summary>
             <div className={"border-2 p-2 m-4 border-white/50"}>
-                <form name="createTeacherForm" onSubmit={(e) => editTeacher(e)}>
+                <form name="editTeacherForm" onSubmit={(e) => editTeacher(e)}>
+
+                    <select className={"border-2 m-4 pt-4 pb-4 border-white/50"} onChange={(e) => {setId(e.target.value), setName(getTeacherName(teachers, e.target.value))}}>
+                        <option className="mb-2 border-b border-white/50 text-gray" value="">
+                        ...
+                        </option>
+                        {Object.entries(teachers).map(([key, teacher]) => {
+
+                            return (
+                                <option key={key} className="mb-2 border-b border-white/50 text-black" value={teacher.id}>
+                                    {teacher.name} | {teacher.id}   
+                                </option>
+                            );
+                        })
+                        }
+                    </select>
+
+
                     <br />
                     <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}/>
                     <label className={"p-2 pr-4"} > Instructor Name</label>
@@ -109,8 +186,24 @@ export default function EditTeacher(){
 
                     <input type="checkbox" id="mentorStatus" className={"scale-150 border-2 p-1 m-4 ml-20 mr-16 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setIsMentor(e.target.checked)}/>
                     <label className={"p-2 pr-4"} >Mentor Status</label> 
-
                     <br />
+                    
+                    <label className={"p-2 pr-4"} >Sections:</label> 
+
+                    {/* Generate list of all selectable sections */}
+                    <div className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
+                        {Object.entries(scheduleSections).map(([key, value]) => {
+                            return (
+                                <div key={key} className="mb-2 border-b border-white/50">
+                                    <input type="checkbox" id={value} value={value} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
+                                    <label className={"p-2 pr-4 pl-6"} >{value}</label>    
+                                </div>
+                            );
+                        })
+                        }
+                    </div>
+                    <br />
+
                     <button type="submit" className={"ml-4 w-35 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>
                 </form>
                 
