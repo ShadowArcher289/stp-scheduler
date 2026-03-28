@@ -26,10 +26,10 @@ export default function SectionsPage(){
 
     return (
         <div className="text-black content-center">
-            <h2 className=" text-end pr-16 mt-8 mb-2 text-lg"><b>{sectionData.length}</b> Total Sections</h2>
+            <h2 className=" text-end pr-8 mt-4 mb-1 text-lg"><b>{sectionData.length}</b> Total Sections</h2>
             <ul className="flex flex-wrap w-dvw justify-left list-decimal p-4 pl-16">
                 {sectionData.map((section) => (
-                    <li key={section.id} className="m-6 mt-1 mb-1 pl-1 pr-1 text-sm">
+                    <li key={section.id} className="m-6 mt-1 mb-1 pl-1 pr-1 text-xs">
                         <b>id: | subject: | level: | days:</b> <br />
                         {section.id}<br />
                         {section.subject}<br />

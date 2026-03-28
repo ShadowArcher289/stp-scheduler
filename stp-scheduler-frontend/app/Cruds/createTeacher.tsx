@@ -94,7 +94,7 @@ export default function CreateTeacher({scheduleSections}: CreateTeacherProps){
         }, [sectionIds]);
     
     return (
-        <details className="mb-4">
+        <details className="mb-2">
             <summary className="hover:backdrop-brightness-125 p-4">Create Instructor (Click to collapse/expand)</summary>
             <div className={"border-2 p-2 m-4 border-white/50"}>
                 <form name="createTeacherForm" onSubmit={(e) => createTeacher(e)}>

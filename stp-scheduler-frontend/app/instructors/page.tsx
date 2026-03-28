@@ -20,10 +20,10 @@ export default function InstructorsPage(){
 
     return (
         <div className="text-black content-center">
-            <h2 className=" text-end pr-16 mt-8 mb-2 text-lg"><b>{teacherData.length}</b> Total Instructors</h2>
+            <h2 className=" text-end pr-8 mt-4 mb-1 text-lg"><b>{teacherData.length}</b> Total Instructors</h2>
             <ul className="flex flex-wrap w-dvw justify-left list-decimal p-4 pl-16">
                 {teacherData.map((teacher) => (
-                    <li key={teacher.id} className="m-6 mt-1 mb-1 pl-1 pr-1 text-sm">
+                    <li key={teacher.id} className="m-8 mt-1 mb-1 pl-1 pr-1 text-xs">
                         <b>id: | name: | is a mentor: | subjects:</b> <br />
                         {teacher.id}<br />
                         {teacher.name}<br />

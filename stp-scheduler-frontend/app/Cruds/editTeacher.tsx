@@ -106,7 +106,7 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
     }, [sectionIds]);
 
     return (
-        <details className="mb-4">
+        <details className="mb-2">
             <summary className="hover:backdrop-brightness-125 p-4">Edit Instructor (Click to collapse/expand)</summary>
             <div className={"border-2 p-2 m-4 border-white/50"}>
                 <form name="editTeacherForm" onSubmit={(e) => editTeacher(e)}>

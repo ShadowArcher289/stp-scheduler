@@ -77,7 +77,7 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
         }, [sectionIds]);
 
     return (
-        <details className="mb-4">
+        <details className="mb-2">
             <summary className="hover:backdrop-brightness-125 p-4"> Create Student (Click to collapse/expand)</summary>
             <div className={"border-2 p-4 m-4 ml-0 border-white/50"}>
                 <form name="createStudentForm" onSubmit={(e) => createStudent(e)}>

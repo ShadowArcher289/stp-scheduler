@@ -166,7 +166,7 @@ export default function InputPage({path}: InputPageProps){
 
     // Contains functions for retrieving data 
     return(
-        <div className={"p-4 pl-16 mt-10 mb-4 border-b-2 bg-[#f76902] text-white"}>
+        <div className={"p-4 pl-16 mb-4 border-b-2 bg-[#f76902] text-white"}>
             {/* <button onClick={() => getFromBackendApi("Teachers")} className={"border-2 active:backdrop-brightness-90"}>Get Teachers data (Make sure backend is running)</button>
             <button onClick={() => getFromBackendApi("Students")} className={"border-2 active:backdrop-brightness-90"}>Get Students data</button>
             <button onClick={() => getFromBackendApi("Sections")} className={"border-2 active:backdrop-brightness-90"}>Get Sections data</button> */}
