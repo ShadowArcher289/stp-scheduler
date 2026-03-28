@@ -41,7 +41,7 @@ export function updateFromCSV(csvData: any){
  * @param teacher 
  * @returns 
  */
-export function createTeacher(teacher: any){
+export function createTeacher(teacher: TeacherModel){
     var result: any;
     const requestOptions = {
         method: 'POST',
@@ -49,7 +49,7 @@ export function createTeacher(teacher: any){
         body: JSON.stringify(teacher)
     };
 
-    fetch('http://localhost:8000/create/teacher', requestOptions)
+    fetch('http://localhost:8000/teachers/create', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
 
@@ -69,7 +69,7 @@ export function editTeacher(teacher: any){
         body: JSON.stringify(teacher)
     };
 
-    fetch('http://localhost:8000/edit/teacher', requestOptions)
+    fetch('http://localhost:8000/teachers/update', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
 
@@ -77,11 +77,45 @@ export function editTeacher(teacher: any){
 }
 
 /**
- * Sends a POST request to create a student in the backend
- * @param student 
+ * Sends a DELETE request to delete a teacher in the backend
+ * @param teacherId
  * @returns 
  */
-export function createStudent(student: any){
+export function deleteTeacher(teacher_id: string){
+    var result: any;
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    fetch(`http://localhost:8000/teachers/delete?teacher_id=${encodeURIComponent(teacher_id)}`, requestOptions)
+        .then(response => response.json())
+        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+
+    return result;
+}
+
+interface TeacherModel{
+    id?: string,
+    name: string,
+    subject_weights: Record<string, number>,
+    sections?: number,
+    is_mentor: boolean
+}
+
+interface StudentModel{
+    id?: string,
+    name: string,
+    subject_abilities: Record<string, number>,
+    section_ids?: string[]
+}
+
+/**
+ * Sends a POST request to create a student in the backend
+ * @param student
+ * @returns 
+ */
+export function createStudent(student: StudentModel){
     var result: any;
 
     const requestOptions = {
@@ -90,7 +124,7 @@ export function createStudent(student: any){
         body: JSON.stringify(student)
     };
 
-    fetch('http://localhost:8000/create/student', requestOptions)
+    fetch('http://localhost:8000/students/create', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
         
@@ -111,13 +145,35 @@ export function editStudent(student: any){
         body: JSON.stringify(student)
     };
 
-    fetch('http://localhost:8000/edit/student', requestOptions)
+    fetch('http://localhost:8000/students/update', requestOptions)
         .then(response => response.json())
         .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
         
     return result;
 }
 
+/**
+ * Sends a DELETE request to delete a student in the backend
+ * @param studentId
+ * @returns 
+ */
+export function deleteStudent(student_id: string){
+    var result: any;
+
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    };
+
+    fetch(`http://localhost:8000/students/delete?student_id=${encodeURIComponent(student_id)}`, requestOptions)
+        .then(response => response.json())
+        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+        
+    return result;
+}
+
+
+// UNUSED:
 /**
  * Sends a POST request to create a section in the backend
  * @param section 

@@ -1,4 +1,5 @@
 import localData from "../../data/BackendData.json";
+import { getStudentName, getTeacherName } from "../HelperFunctions";
 
 /**
  * Author: Addison A
@@ -19,7 +20,7 @@ interface SectionCardProps{
  * @returns string "valid css color"
  */
 function getBackgroundColor(subject: string){
-    switch (subject.toLowerCase()) { //TODO: Powdered colors
+    switch (subject.toLowerCase()) {
         case "math":
             return "#ff4040ff";
         case "english":
@@ -32,35 +33,7 @@ function getBackgroundColor(subject: string){
     }
 }
 
-/**
- * Given an array of teachers and a teacher's id, returns the name of a specified teacher.
- * @param teachers Array of Teachers
- * @param teacherId Id of the desired teacher
- * @returns string
- */
-function getTeacherName(teachers: Array<TeacherProps>, teacherId: string): string{
-    const match = teachers.find(teacher => teacher.id === teacherId); // find the matching teacher
-
-    if(match){ // if not unidentified, then return the name
-        return match.name;
-    }
-    else{
-        return "";
-    }
-}
-
-function getStudentName(students: Array<StudentProps>, studentId: string): string{
-    const match = students.find(student => student.id === studentId); // find the matching student
-
-    if(match){ // if not unidentified, then return the name
-        return match.name;
-    }
-    else{
-        return "";
-    }
-}
-
-function getSectionLevel(level: number): string{
+export function getSectionLevel(level: number): string{
     switch(level){
         case 0:
             return "Beginner";

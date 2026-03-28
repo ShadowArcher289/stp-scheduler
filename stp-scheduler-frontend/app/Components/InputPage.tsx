@@ -8,6 +8,8 @@ import CreateTeacher from '../Cruds/createTeacher';
 import * as GetAPI from "./../GetFromApi";
 import EditStudent from '../Cruds/editStudent';
 import EditTeacher from '../Cruds/editTeacher';
+import DeleteStudent from '../Cruds/deleteStudent';
+import DeleteTeacher from '../Cruds/deleteTeacher';
 
 
 /**
@@ -194,9 +196,11 @@ export default function InputPage({path}: InputPageProps){
             <p>{studentData}</p>
 
             <CreateStudent scheduleSections={sectionIds}></CreateStudent>
-            <CreateTeacher></CreateTeacher>
+            <CreateTeacher scheduleSections={sectionIds}></CreateTeacher>
             <EditStudent scheduleSections={sectionIds}></EditStudent>
-            <EditTeacher></EditTeacher>
+            <EditTeacher scheduleSections={sectionIds}></EditTeacher>
+            <DeleteStudent></DeleteStudent>
+            <DeleteTeacher></DeleteTeacher>
         </div>
     );
 }

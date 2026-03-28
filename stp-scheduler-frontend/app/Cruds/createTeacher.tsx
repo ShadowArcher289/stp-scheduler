@@ -1,10 +1,14 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
+
+interface CreateTeacherProps{
+    scheduleSections: string[];
+}
 
 var minWeight = "-1";
 var maxWeight = "1";
 
-export default function CreateTeacher(){
+export default function CreateTeacher({scheduleSections}: CreateTeacherProps){
     const [name, setName] = useState<string>("no_name");
     const [isMentor, setIsMentor] = useState<boolean>(false);
     const [mathWeight, setMathWeight] = useState<number>(0);
@@ -16,6 +20,23 @@ export default function CreateTeacher(){
     const [presentationsWeight, setPresentationsWeight] = useState<number>(0);
     const [digitalLitWeight, setDigitalLithWeight] = useState<number>(0);
 
+    const [sectionIds, setSectionIds] = useState<string[]>([]);
+
+    // TODO: This code is used in a lot of places for selecting sections and should be turned into a helper class
+    /**
+     * Calls the helper functions that updates the section lists.
+     * @param e ChangeEvent<HTMLInputElement>, check event
+     * @param value string, the section id
+     */
+    function updateSections(e: ChangeEvent<HTMLInputElement>, value: string): void {
+        if(e.target.checked){
+            setSectionIds(prev => [...prev, value]);
+        }
+        else{
+            setSectionIds(prev => prev.filter(x => x !== value));
+        }
+    }
+
     /**
      * Create a teacher
      * 
@@ -24,7 +45,7 @@ export default function CreateTeacher(){
      * @param subject_weights 
      * @param is_mentor 
      */
-    function createTeacher(e: FormEvent<HTMLFormElement>, teacher_name: string = "", subject_weights: Record<string, number> = {}, is_mentor: boolean = false){
+    function createTeacher(e: FormEvent<HTMLFormElement>, teacher_name: string = "", subject_weights: Record<string, number> = {}, is_mentor: boolean = false, section_ids: string[] = []){
         e.preventDefault(); // prevents page reload on form submission
         
         teacher_name = name;
@@ -39,16 +60,19 @@ export default function CreateTeacher(){
             "digital lit": digitalLitWeight
         };
         is_mentor = isMentor;
+        section_ids = sectionIds;
 
         console.log("Teacher Creation Initiated: ");
         console.log("teacher_name: " + teacher_name);
         console.log("subject_weights: " + JSON.stringify(subject_weights));
         console.log("is_mentor: " + is_mentor);
+        console.log("section_ids: " + section_ids);
 
         API.createTeacher({
             "name": teacher_name,
             "subject_weights": subject_weights,
             "is_mentor": is_mentor
+            // "section_ids": section_ids
         })
 
         e.currentTarget.reset(); // reset the data
@@ -62,8 +86,12 @@ export default function CreateTeacher(){
         setFinancialLitWeight(0);
         setPresentationsWeight(0);
         setDigitalLithWeight(0);
+        setSectionIds([]);
 
     }
+        useEffect(() => {
+            console.log("sectionIds changed:", sectionIds);
+        }, [sectionIds]);
     
     return (
         <details className="mb-4">
@@ -109,7 +137,24 @@ export default function CreateTeacher(){
 
                     <input type="checkbox" id="mentorStatus" className={"scale-150 border-2 p-1 m-4 ml-20 mr-16 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setIsMentor(e.target.checked)}/>
                     <label className={"p-2 pr-4"} >Mentor Status</label> 
+                    <br />
 
+                    {/* Generate list of all selectable sections */}
+                    {/* UNUSED as backend has not implemented creating instructors with sections */}
+                    {/* <div className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
+                        {Object.entries(scheduleSections).map(([key, value]) => {
+
+                            // incrementSectionCount();
+                            // const [day, timeBlockId] = key.split("-");
+                            return (
+                                <div key={key} className="mb-2 border-b border-white/50">
+                                    <input type="checkbox" id={value} value={value} checked={sectionIds.includes(value)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
+                                    <label className={"p-2 pr-4 pl-6"} >{value}</label>    
+                                </div>
+                            );
+                        })
+                        }
+                    </div> */}
                     <br />
                     <button type="submit" className={"ml-4 w-35 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>
                 </form>
