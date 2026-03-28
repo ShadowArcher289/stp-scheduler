@@ -1,7 +1,7 @@
 'use client'
 
 import localData from "../data/BackendData.json";
-import { section_data, student_data, teacher_data } from "./GetFromApi";
+import * as GetAPI from "./GetFromApi";
 import Section from "./Components/sectionCard";
 import { useEffect, useState } from "react";
 
@@ -17,10 +17,14 @@ import { useEffect, useState } from "react";
  */
 var sectionCount = 0;
 
-var pageStudentData = localData.students;
-var pageTeacherData = localData.teachers;
+// var pageStudentData = localData.students;
+// var pageTeacherData = localData.teachers;
+// var pageTimeblockData = localData.timeBlock;
+// var pageSectionData = localData.sections;
+var pageStudentData: StudentProps[] = [];
+var pageTeacherData: TeacherProps[] = [];
 var pageTimeblockData = localData.timeBlock;
-var pageSectionData = localData.sections;
+var pageSectionData: SectionProps[] = [];
 
 /**
  * Changes the cursor to a loading state for 1 second.
@@ -44,14 +48,14 @@ function showLoadingCursor(duration: number): void {
  */
 function updateTableData(): void {
   console.log("Data being updated")
-  if (student_data != "" && (pageStudentData != student_data)){
-    pageStudentData = student_data
+  if (GetAPI.student_data != "" && (pageStudentData != GetAPI.student_data)){
+    pageStudentData = GetAPI.student_data
   }
-  if (teacher_data != "" && (pageTeacherData != teacher_data)){
-    pageTeacherData = teacher_data
+  if (GetAPI.teacher_data != "" && (pageTeacherData != GetAPI.teacher_data)){
+    pageTeacherData = GetAPI.teacher_data
   }
-  if (section_data != "" && (pageSectionData != teacher_data)){
-    pageSectionData = section_data
+  if (GetAPI.section_data != "" && (pageSectionData != GetAPI.teacher_data)){
+    pageSectionData = GetAPI.section_data
   }
   // if (timeblock_data != "" && (pageTimeblockData != teacher_data)){
   //   pageTimeblockData = teacher_data
@@ -198,8 +202,20 @@ export default function Home() {
   const groupedSections = groupSections(sectionData as []);
   resetSectionCount();
 
+
+  /**
+   * calls the GetAPI to repopulate its data
+   */
   useEffect(() => {
-    generateSchedule();
+    async function fetchData(){
+      await GetAPI.getFromBackendApi("Teachers");
+      await GetAPI.getFromBackendApi("Students");
+      await GetAPI.getFromBackendApi("Sections");
+
+      generateSchedule();
+    }
+
+    fetchData();
   }, [])
 
   return (

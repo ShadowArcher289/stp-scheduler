@@ -1,14 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
 
 interface CreateStudentProps{
     scheduleSections: string[];
 }
 
-/**
- * The sections selected by the user
- */
-var selectedSections: string[] = [];
 var minRank = "0";
 var maxRank = "10";
 
@@ -30,34 +26,10 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
      */
     function updateSections(e: ChangeEvent<HTMLInputElement>, value: string): void {
         if(e.target.checked){
-            addSection(value);
+            setSectionIds(prev => [...prev, value]);
         }
         else{
-            removeSection(value);
-        }
-        console.log(selectedSections);
-    }
-    /**
-     * Adds a section from the user's selection
-     * @param sectionId string, id of the section to add
-     */
-    function addSection(sectionId: string){
-        selectedSections.push(sectionId);
-        setSectionIds(selectedSections);
-    }
-
-    /**
-     * Removes a section from the user's selection
-     * @param sectionId string, id of the section to remove
-     */
-    function removeSection(sectionId: string){
-        try {
-            if(selectedSections.includes(sectionId)){
-                selectedSections.splice(selectedSections.indexOf(sectionId), 1);
-                setSectionIds(selectedSections);
-            }
-        } catch (err) {
-            console.error("Error: " + err);
+            setSectionIds(prev => prev.filter(x => x !== value));
         }
     }
 
@@ -69,7 +41,7 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
      * @param subject_rankings unused
      * @param section_ids unused
      */
-    function createStudent(e: FormEvent<HTMLFormElement>, student_name: string = "", subject_rankings: Record<string, number> = {}, section_ids: string[] = []){
+    async function createStudent(e: FormEvent<HTMLFormElement>, student_name: string = "", subject_rankings: Record<string, number> = {}, section_ids: string[] = []){
         e.preventDefault(); // prevents page reload on form submission
         
         student_name = name;
@@ -90,13 +62,19 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
             "section_ids": section_ids
         })
 
-        e.currentTarget.reset(); // reset the data
+        await e.currentTarget.reset(); // reset the data
         setName("no_name");
         setSectionIds([]);
         setMathScore(5);
         setEnglishScore(5);
         setAslScore(5);
+        console.log(sectionIds);
+
+
     }
+        useEffect(() => {
+            console.log("sectionIds changed:", sectionIds);
+        }, [sectionIds]);
 
     return (
         <details className="mb-4">
@@ -127,7 +105,7 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
                             // const [day, timeBlockId] = key.split("-");
                             return (
                                 <div key={key} className="mb-2 border-b border-white/50">
-                                    <input type="checkbox" id={value} value={value} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
+                                    <input type="checkbox" id={value} value={value} checked={sectionIds.includes(value)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
                                     <label className={"p-2 pr-4 pl-6"} >{value}</label>    
                                 </div>
                             );

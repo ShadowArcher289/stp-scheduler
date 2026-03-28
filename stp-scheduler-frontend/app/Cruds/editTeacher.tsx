@@ -3,7 +3,7 @@ import * as API from '../SendToApi';
 import { teacher_data } from "../GetFromApi";
 import { getTeacherName } from "../HelperFunctions";
 
-interface CreateTEacherProps{
+interface EditTeacherProps{
     scheduleSections: string[];
 }
 
@@ -11,7 +11,7 @@ var selectedSections: string[] = [];
 var minWeight = "-1";
 var maxWeight = "1";
 
-export default function EditTeacher({scheduleSections}: CreateTEacherProps){
+export default function EditTeacher({scheduleSections}: EditTeacherProps){
     const [teachers, setTeachers] = useState<TeacherProps[]>([])
 
     const [id, setId] = useState<string>("");
@@ -34,34 +34,10 @@ export default function EditTeacher({scheduleSections}: CreateTEacherProps){
      */
     function updateSections(e: ChangeEvent<HTMLInputElement>, value: string): void {
         if(e.target.checked){
-            addSection(value);
+            setSectionIds(prev => [...prev, value]);
         }
         else{
-            removeSection(value);
-        }
-        console.log(selectedSections);
-    }
-    /**
-     * Adds a section from the user's selection
-     * @param sectionId string, id of the section to add
-     */
-    function addSection(sectionId: string){
-        selectedSections.push(sectionId);
-        setSectionIds(selectedSections);
-    }
-
-    /**
-     * Removes a section from the user's selection
-     * @param sectionId string, id of the section to remove
-     */
-    function removeSection(sectionId: string){
-        try {
-            if(selectedSections.includes(sectionId)){
-                selectedSections.splice(selectedSections.indexOf(sectionId), 1);
-                setSectionIds(selectedSections);
-            }
-        } catch (err) {
-            console.error("Error: " + err);
+            setSectionIds(prev => prev.filter(x => x !== value));
         }
     }
     
@@ -124,6 +100,10 @@ export default function EditTeacher({scheduleSections}: CreateTEacherProps){
     useEffect(() => {
         setTeachers(teacher_data)
     }, []);
+    
+    useEffect(() => {
+        console.log("sectionIds changed:", sectionIds);
+    }, [sectionIds]);
 
     return (
         <details className="mb-4">
@@ -195,7 +175,7 @@ export default function EditTeacher({scheduleSections}: CreateTEacherProps){
                         {Object.entries(scheduleSections).map(([key, value]) => {
                             return (
                                 <div key={key} className="mb-2 border-b border-white/50">
-                                    <input type="checkbox" id={value} value={value} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
+                                    <input type="checkbox" id={value} value={value} checked={sectionIds.includes(value)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
                                     <label className={"p-2 pr-4 pl-6"} >{value}</label>    
                                 </div>
                             );

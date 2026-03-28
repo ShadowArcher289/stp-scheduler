@@ -196,7 +196,7 @@ export default function InputPage({path}: InputPageProps){
             <p>{studentData}</p>
 
             <CreateStudent scheduleSections={sectionIds}></CreateStudent>
-            <CreateTeacher></CreateTeacher>
+            <CreateTeacher scheduleSections={sectionIds}></CreateTeacher>
             <EditStudent scheduleSections={sectionIds}></EditStudent>
             <EditTeacher scheduleSections={sectionIds}></EditTeacher>
             <DeleteStudent></DeleteStudent>

@@ -41,7 +41,7 @@ export function updateFromCSV(csvData: any){
  * @param teacher 
  * @returns 
  */
-export function createTeacher(teacher: any){
+export function createTeacher(teacher: TeacherModel){
     var result: any;
     const requestOptions = {
         method: 'POST',
@@ -95,12 +95,27 @@ export function deleteTeacher(teacher_id: string){
     return result;
 }
 
+interface TeacherModel{
+    id?: string,
+    name: string,
+    subject_weights: Record<string, number>,
+    sections?: number,
+    is_mentor: boolean
+}
+
+interface StudentModel{
+    id?: string,
+    name: string,
+    subject_abilities: Record<string, number>,
+    section_ids?: string[]
+}
+
 /**
  * Sends a POST request to create a student in the backend
  * @param student
  * @returns 
  */
-export function createStudent(student: any){
+export function createStudent(student: StudentModel){
     var result: any;
 
     const requestOptions = {

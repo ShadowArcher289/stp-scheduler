@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
-import { student_data } from "../GetFromApi";
+import { getFromBackendApi, student_data } from "../GetFromApi";
 
 export default function DeleteStudent(){
     const [studentId, setStudentId] = useState<string>("");
@@ -21,6 +21,10 @@ export default function DeleteStudent(){
 
         e.currentTarget.reset(); // reset the data
         setStudentId("");
+
+        // Reload students without the deleted student
+        getFromBackendApi("Students");
+        setStudents(student_data);
     }
 
     useEffect(() => {

@@ -20,7 +20,7 @@ interface SectionCardProps{
  * @returns string "valid css color"
  */
 function getBackgroundColor(subject: string){
-    switch (subject.toLowerCase()) { //TODO: Powdered colors
+    switch (subject.toLowerCase()) {
         case "math":
             return "#ff4040ff";
         case "english":
