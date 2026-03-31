@@ -2,6 +2,7 @@
 
 import localData from "../data/BackendData.json";
 import * as GetAPI from "./GetFromApi";
+import * as SendAPI from "./SendToApi";
 import Section from "./Components/sectionCard";
 import { useEffect, useState } from "react";
 
@@ -46,8 +47,14 @@ function showLoadingCursor(duration: number): void {
 /**
  * Updates the page's data to the data from the InputPage
  */
-function updateTableData(): void {
+async function updateTableData() {
   console.log("Data being updated")
+
+  await SendAPI.regenerateSchedule();
+  await GetAPI.getFromBackendApi("Teachers");
+  await GetAPI.getFromBackendApi("Students");
+  await GetAPI.getFromBackendApi("Sections");
+
   if (GetAPI.student_data != "" && (pageStudentData != GetAPI.student_data)){
     pageStudentData = GetAPI.student_data
   }

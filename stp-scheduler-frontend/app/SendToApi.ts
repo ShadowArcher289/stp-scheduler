@@ -36,6 +36,26 @@ export function updateFromCSV(csvData: any){
     return result;
 }
 
+
+/**
+ * Sends a POST request to have the schedule code re-run, generating a completely new schedule
+ * @param csvData 
+ */
+export function regenerateSchedule(){
+    var result: any;
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    fetch('http://localhost:8000/schedule/regenerate', requestOptions)
+        .then(response => response.json())
+        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+
+    return result;
+}
+
+
 /**
  * Sends a POST request to create a teacher in the backend
  * @param teacher 
