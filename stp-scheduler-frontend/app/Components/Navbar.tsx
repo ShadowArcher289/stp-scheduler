@@ -1,6 +1,5 @@
 import NavItem, { NavItemProps } from "./Navitem";
 
-
 const navItems: NavItemProps[] = [
     {
         title: "Home",
@@ -28,16 +27,16 @@ export default function Navbar(){
 
     return (
         <div className={"flex justify-end p-3 pt-5 pb-5 mb-2 border-b-2 bg-[#f76902] text-white pr-5"}>
-                <div className="hidden md:visible md:inline-flex p-1 pl-4 pr-4 border-2 rounded">
-                    <ul className="inline-flex flex-row flex-nowrap justify-between text-center text-base">
-                        {navItems.map((navItem, index) => (
-                            <li className="flex flex-row justify-center items-center" key={index}>
-                                | {<NavItem key={index} {...navItem} />}
-                            </li>
-                        ))}
-                        <li className="flex flex-row justify-center items-center">|</li>
-                    </ul>
-                </div>
+            <div className="hidden md:visible md:inline-flex p-1 pl-4 pr-4 border-2 rounded">
+                <ul className="inline-flex flex-row flex-nowrap justify-between text-center text-base">
+                    {navItems.map((navItem, index) => (
+                        <li className="flex flex-row justify-center items-center" key={index}>
+                            | {<NavItem key={index} {...navItem} />}
+                        </li>
+                    ))}
+                    <li className="flex flex-row justify-center items-center">|</li>
+                </ul>
+            </div>
         </div>
     );
 }

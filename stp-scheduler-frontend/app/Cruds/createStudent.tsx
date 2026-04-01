@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
+import { getStudentName, getTeacherName } from "../HelperFunctions";
+import { section_data, teacher_data } from "../GetFromApi";
 
 interface CreateStudentProps{
     scheduleSections: string[];
@@ -9,12 +11,15 @@ var minRank = "0";
 var maxRank = "10";
 
 export default function CreateStudent({scheduleSections}: CreateStudentProps){
+    const [teachers, setTeachers] = useState<TeacherProps[]>([])
+
     const [name, setName] = useState<string>("no_name");
     const [mathScore, setMathScore] = useState<number>(5);
     const [englishScore, setEnglishScore] = useState<number>(5);
     const [aslScore, setAslScore] = useState<number>(5);
 
     const [subjectRankings, setSubjectRankings] = useState<Record<string, number>>({"math": 5, "english": 5, "asl": 5});
+    const [sections, setSections] = useState<SectionProps[]>([]);
     const [sectionIds, setSectionIds] = useState<string[]>([]);
 
 
@@ -72,9 +77,17 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
 
 
     }
-        useEffect(() => {
-            console.log("sectionIds changed:", sectionIds);
-        }, [sectionIds]);
+
+    useEffect(() => {
+        console.log("sectionIds changed:", sectionIds);
+    }, [sectionIds]);
+
+    useEffect(() => {
+        setSections(section_data)
+        setTeachers(teacher_data)
+    }, []);
+
+
 
     return (
         <details className="mb-2">
@@ -98,20 +111,21 @@ export default function CreateStudent({scheduleSections}: CreateStudentProps){
                     {/* <input type="text" id="sections" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}/> */}
                     
                     {/* Generate list of all selectable sections */}
-                    <div className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
-                        {Object.entries(scheduleSections).map(([key, value]) => {
+                    <details className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
+                        <summary className="hover:backdrop-brightness-125 p-4">Sections (Click to collapse/expand)</summary>
+                        {Object.entries(sections).map(([key, section]) => {
 
                             // incrementSectionCount();
                             // const [day, timeBlockId] = key.split("-");
                             return (
                                 <div key={key} className="mb-2 border-b border-white/50">
-                                    <input type="checkbox" id={value} value={value} checked={sectionIds.includes(value)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
-                                    <label className={"p-2 pr-4 pl-6"} >{value}</label>    
+                                    <input type="checkbox" id={section.id} value={section.id} checked={sectionIds.includes(section.id)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
+                                    <label className={"p-2 pr-4 pl-6"} >{section.subject} | {section.level} | {getTeacherName(teachers, section.teacherId)} | {section.id}</label>    
                                 </div>
                             );
                         })
                         }
-                    </div>
+                    </details>
                     {/* <input type="checkbox" id="sections" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}/> */}
 
                     <button type="submit" className={"border-2 p-1 ml-4 w-35 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>

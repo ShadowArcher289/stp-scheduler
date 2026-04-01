@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
-import { teacher_data } from "../GetFromApi";
+import { section_data, teacher_data } from "../GetFromApi";
 import { getTeacherName } from "../HelperFunctions";
 
 interface EditTeacherProps{
@@ -25,6 +25,8 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
     const [financialLitWeight, setFinancialLitWeight] = useState<number>(0);
     const [presentationsWeight, setPresentationsWeight] = useState<number>(0);
     const [digitalLitWeight, setDigitalLithWeight] = useState<number>(0);
+
+    const [sections, setSections] = useState<SectionProps[]>([]);
     const [sectionIds, setSectionIds] = useState<string[]>([]);
 
     /**
@@ -75,7 +77,7 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
         console.log("section_ids: " + section_ids);
 
         API.editTeacher({
-            "teacher_id": teacher_id,
+            "id": teacher_id,
             "name": teacher_name,
             "subject_weights": subject_weights,
             "is_mentor": is_mentor
@@ -99,6 +101,7 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
     
     useEffect(() => {
         setTeachers(teacher_data)
+        setSections(section_data)
     }, []);
     
     useEffect(() => {
@@ -168,20 +171,21 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
                     <label className={"p-2 pr-4"} >Mentor Status</label> 
                     <br />
                     
-                    <label className={"p-2 pr-4"} >Sections:</label> 
+                    {/* <label className={"p-2 pr-4"} >Sections:</label>  */}
 
                     {/* Generate list of all selectable sections */}
-                    <div className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
-                        {Object.entries(scheduleSections).map(([key, value]) => {
+                    <details className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
+                        <summary className="hover:backdrop-brightness-125 p-4">Sections (Click to collapse/expand)</summary>
+                        {Object.entries(sections).map(([key, section]) => {
                             return (
                                 <div key={key} className="mb-2 border-b border-white/50">
-                                    <input type="checkbox" id={value} value={value} checked={sectionIds.includes(value)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
-                                    <label className={"p-2 pr-4 pl-6"} >{value}</label>    
+                                    <input type="checkbox" id={section.id} value={section.id} checked={sectionIds.includes(section.id)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
+                                    <label className={"p-2 pr-4 pl-6"} >{section.subject} | {section.level} | {getTeacherName(teachers, section.teacherId)} | {section.id}</label>    
                                 </div>
                             );
                         })
                         }
-                    </div>
+                    </details>
                     <br />
 
                     <button type="submit" className={"ml-4 w-35 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>

@@ -45,15 +45,23 @@ function showLoadingCursor(duration: number): void {
 }
 
 /**
+ * Calls the backend to regenerate the schedule, and then update the table data
+ */
+function regenerateTableSchedule() {
+  SendAPI.regenerateSchedule();
+
+  updateTableData();
+}
+
+/**
  * Updates the page's data to the data from the InputPage
  */
-async function updateTableData() {
+function updateTableData() {
   console.log("Data being updated")
 
-  await SendAPI.regenerateSchedule();
-  await GetAPI.getFromBackendApi("Teachers");
-  await GetAPI.getFromBackendApi("Students");
-  await GetAPI.getFromBackendApi("Sections");
+  GetAPI.getFromBackendApi("Teachers");
+  GetAPI.getFromBackendApi("Students");
+  GetAPI.getFromBackendApi("Sections");
 
   if (GetAPI.student_data != "" && (pageStudentData != GetAPI.student_data)){
     pageStudentData = GetAPI.student_data
@@ -215,6 +223,7 @@ export default function Home() {
    */
   useEffect(() => {
     async function fetchData(){
+      await SendAPI.regenerateSchedule();
       await GetAPI.getFromBackendApi("Teachers");
       await GetAPI.getFromBackendApi("Students");
       await GetAPI.getFromBackendApi("Sections");
@@ -223,7 +232,7 @@ export default function Home() {
     }
 
     fetchData();
-  }, [])
+  }, []);
 
   return (
 
@@ -232,7 +241,7 @@ export default function Home() {
       {/* <InputPage path={"../data/InputTestData.json"}></InputPage> */}
 
       <div className={"p-4 pl-16 mb-4 border-b-2 bg-[#f76902] text-white"}>
-        <button onClick={generateSchedule} className={"border-2 active:backdrop-brightness-90 p-2 pr-4"}>Regenerate Schedule</button>
+        <button onClick={regenerateTableSchedule} className={"border-2 active:backdrop-brightness-90 p-2 pr-4"}>Regenerate Schedule</button>
       </div>
 
       {/*  Schedule */}
