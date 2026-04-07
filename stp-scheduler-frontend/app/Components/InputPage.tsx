@@ -10,7 +10,7 @@ import EditStudent from '../Cruds/editStudent';
 import EditTeacher from '../Cruds/editTeacher';
 import DeleteStudent from '../Cruds/deleteStudent';
 import DeleteTeacher from '../Cruds/deleteTeacher';
-
+import { Tooltip } from 'react-tooltip';
 
 /**
  * Author: Addison A
@@ -167,6 +167,7 @@ export default function InputPage({path}: InputPageProps){
     // Contains functions for retrieving data 
     return(
         <div className={"p-4 pl-16 mb-4 border-b-2 bg-[#f76902] text-white"}>
+        <Tooltip id="my-tooltip" />
             {/* <button onClick={() => getFromBackendApi("Teachers")} className={"border-2 active:backdrop-brightness-90"}>Get Teachers data (Make sure backend is running)</button>
             <button onClick={() => getFromBackendApi("Students")} className={"border-2 active:backdrop-brightness-90"}>Get Students data</button>
             <button onClick={() => getFromBackendApi("Sections")} className={"border-2 active:backdrop-brightness-90"}>Get Sections data</button> */}
@@ -187,7 +188,10 @@ export default function InputPage({path}: InputPageProps){
             <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit .xlsx (Microsoft Excel) File:</label>
-                <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "csv")}/>
+
+                <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} 
+                    accept=".xlsx" onChange={(e) => handleFileUpload(e, "csv")} 
+                    data-tooltip-id="my-tooltip" data-tooltip-content="Upload an Excel file from your computer" />
             </form>
 
             <br></br>

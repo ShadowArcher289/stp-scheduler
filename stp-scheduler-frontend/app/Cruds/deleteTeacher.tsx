@@ -54,7 +54,7 @@ export default function DeleteTeacher(){
                         }
                     </select>
 
-                    <button type="submit" className={"border-2 p-1 ml-4 w-35 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>
+                    <button type="submit" className={"border-2 p-1 ml-4 w-35 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Delete</button>
                 </form>
             </div>
         </details>

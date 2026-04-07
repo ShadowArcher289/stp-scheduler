@@ -131,7 +131,8 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
 
 
                     <br />
-                    <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}/>
+                    <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}
+                        data-tooltip-id="my-tooltip" data-tooltip-content="Enter instructor's updated name" />
                     <label className={"p-2 pr-4"} > Instructor Name</label>
                     <br />
 
@@ -175,7 +176,9 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
 
                     {/* Generate list of all selectable sections */}
                     <details className={"border-2 m-4 pt-4 pb-4 border-white/50"}>
-                        <summary className="hover:backdrop-brightness-125 p-4">Sections (Click to collapse/expand)</summary>
+                        <summary className="hover:backdrop-brightness-125 p-4"
+                            data-tooltip-id="my-tooltip" data-tooltip-content="Select all sections instructor will be instructing" 
+                        >Sections (Click to collapse/expand)</summary>
                         {Object.entries(sections).map(([key, section]) => {
                             return (
                                 <div key={key} className="mb-2 border-b border-white/50">
@@ -188,7 +191,7 @@ export default function EditTeacher({scheduleSections}: EditTeacherProps){
                     </details>
                     <br />
 
-                    <button type="submit" className={"ml-4 w-35 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>
+                    <button type="submit" className={"ml-4 w-35 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Update</button>
                 </form>
                 
             </div>

@@ -5,6 +5,7 @@ import * as GetAPI from "./GetFromApi";
 import * as SendAPI from "./SendToApi";
 import Section from "./Components/sectionCard";
 import { useEffect, useState } from "react";
+import { Tooltip } from "react-tooltip";
 
 /**
  * Author: Addison A
@@ -224,9 +225,9 @@ export default function Home() {
   useEffect(() => {
     async function fetchData(){
       await SendAPI.regenerateSchedule();
-      GetAPI.getFromBackendApi("Teachers");
-      GetAPI.getFromBackendApi("Students");
-      GetAPI.getFromBackendApi("Sections");
+      await GetAPI.getFromBackendApi("Teachers");
+      await GetAPI.getFromBackendApi("Students");
+      await GetAPI.getFromBackendApi("Sections");
 
       generateSchedule();
     }
@@ -237,6 +238,7 @@ export default function Home() {
   return (
 
     <section className="max-w-dvw items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
+      <Tooltip id="my-tooltip" />
       {/* Inputs */}
       {/* <InputPage path={"../data/InputTestData.json"}></InputPage> */}
 

@@ -99,7 +99,8 @@ export default function CreateTeacher({scheduleSections}: CreateTeacherProps){
             <div className={"border-2 p-2 m-4 border-white/50"}>
                 <form name="createTeacherForm" onSubmit={(e) => createTeacher(e)}>
                     <br />
-                    <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}/>
+                    <input type="text" id="name" className={"ml-4 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} onChange={(e) => setName(e.currentTarget.value)}
+                        data-tooltip-id="my-tooltip" data-tooltip-content="Enter new student's name" />
                     <label className={"p-2 pr-4"} > Instructor Name</label>
                     <br />
 
@@ -156,7 +157,7 @@ export default function CreateTeacher({scheduleSections}: CreateTeacherProps){
                         }
                     </div> */}
                     <br />
-                    <button type="submit" className={"ml-4 w-35 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Submit</button>
+                    <button type="submit" className={"ml-4 w-35 border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"}>Create</button>
                 </form>
                 
             </div>
