@@ -174,7 +174,7 @@ export default function InputPage({path}: InputPageProps){
             {/* <button onClick={() => getFromBackendApi("Timeblocks")} className={"border-2 active:backdrop-brightness-90"}>Get Timeblocks data</button> */}
             
             {/* User can input csv files*/}
-            <form name="fileInput">
+            {/* <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit Instructors:</label>
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "teachers")}/>
@@ -183,7 +183,7 @@ export default function InputPage({path}: InputPageProps){
                 <br />
                 <label className={"p-2 pr-4"} >Submit Students:</label>
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
-            </form>
+            </form> */}
             <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit Entire CSV:</label>
