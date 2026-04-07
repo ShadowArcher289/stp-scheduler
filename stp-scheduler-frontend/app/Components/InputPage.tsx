@@ -186,7 +186,7 @@ export default function InputPage({path}: InputPageProps){
             </form> */}
             <form name="fileInput">
                 <br />
-                <label className={"p-2 pr-4"} >Submit Entire CSV:</label>
+                <label className={"p-2 pr-4"} >Submit .xlsx (Microsoft Excel) File:</label>
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "csv")}/>
             </form>
 

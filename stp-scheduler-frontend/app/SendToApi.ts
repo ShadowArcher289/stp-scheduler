@@ -22,18 +22,22 @@ export function generateId(){
  * @param csvData 
  */
 export function updateFromCSV(csvData: any){
-    var result: any;
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(csvData)
-    };
+    try{
+        var result: any;
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(csvData)
+        };
 
-    fetch('http://localhost:8000/update/csv', requestOptions)
-        .then(response => response.json())
-        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+        fetch('http://localhost:8000/update/csv', requestOptions)
+            .then(response => response.json())
+            .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
 
-    return result;
+        return result;
+    } catch (error) {
+        alert("Error, database is not running, please refresh the page and try again or contact the Computer Science House");  
+    }
 }
 
 
@@ -42,17 +46,21 @@ export function updateFromCSV(csvData: any){
  * @param csvData 
  */
 export function regenerateSchedule(){
-    var result: any;
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-    };
+    try {
+        var result: any;
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        };
 
-    fetch('http://localhost:8000/schedule/regenerate', requestOptions)
-        .then(response => response.json())
-        .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
+        fetch('http://localhost:8000/schedule/regenerate', requestOptions)
+            .then(response => response.json())
+            .then(data => result); // NOTE: This is the response data from the backend, idk what to do with it yet.
 
-    return result;
+        return result;
+    } catch (error) {
+        alert("Error, database is not running, please refresh the page and try again or contact the Computer Science House");  
+    }
 }
 
 

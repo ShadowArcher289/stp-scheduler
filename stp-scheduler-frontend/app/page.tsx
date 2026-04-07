@@ -224,9 +224,9 @@ export default function Home() {
   useEffect(() => {
     async function fetchData(){
       await SendAPI.regenerateSchedule();
-      await GetAPI.getFromBackendApi("Teachers");
-      await GetAPI.getFromBackendApi("Students");
-      await GetAPI.getFromBackendApi("Sections");
+      GetAPI.getFromBackendApi("Teachers");
+      GetAPI.getFromBackendApi("Students");
+      GetAPI.getFromBackendApi("Sections");
 
       generateSchedule();
     }
