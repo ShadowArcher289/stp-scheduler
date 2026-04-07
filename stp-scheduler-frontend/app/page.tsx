@@ -236,7 +236,7 @@ export default function Home() {
 
   return (
 
-    <section className="min-w-dvw items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
+    <section className="max-w-dvw items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
       {/* Inputs */}
       {/* <InputPage path={"../data/InputTestData.json"}></InputPage> */}
 
