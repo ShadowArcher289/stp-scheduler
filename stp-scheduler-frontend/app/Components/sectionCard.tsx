@@ -68,7 +68,7 @@ export default function Section(
             {getTeacherName(teachers as Array<TeacherProps>, section.teacherId)} - {getSectionLevel(section.level)} {section.subject.charAt(0).toUpperCase() + section.subject.slice(1)}
             <br />
             <br />
-            <ul className="list-decimal text-left">
+            <ul className="list-decimal text-left text-base">
             {
                 section.studentIds.map((id) => (
                     <li key={id}> {getStudentName(students, id)}</li>
