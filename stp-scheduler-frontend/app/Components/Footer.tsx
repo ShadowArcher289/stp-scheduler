@@ -9,6 +9,10 @@ export default function Footer() {
                     <li>Logan Endes</li>
                     <li>Addison Asuncion</li>
                 </ul>
+                <ul>
+                    <li><b>Student Transition Program:</b></li>
+                    <li><a href="https://www.rit.edu/ntid/stp"><u>www.rit.edu/ntid/stp</u></a></li>
+                </ul>
             </div>
             <a href="https://www.csh.rit.edu/"><img src={"/csh_logo_square.svg"} width={"100px"} height={"100px"} className="m-4 mr-8"></img></a>
         </footer>
