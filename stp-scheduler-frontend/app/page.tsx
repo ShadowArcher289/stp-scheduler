@@ -4,8 +4,9 @@ import localData from "../data/BackendData.json";
 import * as GetAPI from "./GetFromApi";
 import * as SendAPI from "./SendToApi";
 import Section from "./Components/sectionCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
+import { useReactToPrint } from "react-to-print";
 
 /**
  * Author: Addison A
@@ -235,6 +236,26 @@ export default function Home() {
     fetchData();
   }, []);
 
+  
+  const scheduleRef = useRef<HTMLDivElement>(null);
+
+  const print = useReactToPrint({
+    documentTitle: "Schedule",
+    pageStyle: `
+      @media print {
+        #schedule {
+          height: auto !important;
+          max-height: none !important;
+          overflow: visible !important;
+        }
+      }
+    `
+  });
+
+  const handlePrint = () => {
+    print(() => scheduleRef.current);
+  };
+
   return (
 
     <section className="max-w-dvw items-center justify-center font-sans dark:bg-[var(--main-background-color)]">
@@ -243,13 +264,15 @@ export default function Home() {
       {/* <InputPage path={"../data/InputTestData.json"}></InputPage> */}
 
       <div className={"p-4 pl-16 mb-4 border-b-2 bg-[#f76902] text-white"}>
-        <button onClick={regenerateTableSchedule} className={"border-2 active:backdrop-brightness-90 p-2 pr-4"}>Regenerate Schedule</button>
+        <button onClick={regenerateTableSchedule} className={"border-2 active:backdrop-brightness-90 p-2 pl-4 pr-4 mr-4"}>Regenerate Schedule</button>
+        {/* <button onClick={handlePrint} className={"border-2 active:backdrop-brightness-90 p-2 pl-4 pr-4"}>Print Schedule</button> */}
       </div>
+      
 
       {/*  Schedule */}
-      <div className="m-12 mb-2 mt-0 p-4 rounded-4xl bg-gray-800">
+      <div className="m-12 mb-2 mt-0 p-4 rounded-4xl bg-gray-800" ref={scheduleRef}>
         <div 
-          id="schedule" 
+          id="schedule"
           className="grid grid-cols-[6rem_repeat(5,1fr)] auto-rows-min grid-flow-dense w-auto border-2 border-solid border-[var(--main-text-color)] bg-[var(--main-background-color)] bg-opacity-50 text-base rounded-4xl"
           // grid-rows-[4rem_repeat(11,1fr)]
           style={{
