@@ -185,14 +185,16 @@ export default function InputPage({path}: InputPageProps){
                 <label className={"p-2 pr-4"} >Submit Students:</label>
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} accept=".xlsx" onChange={(e) => handleFileUpload(e, "students")}/>
             </form> */}
-            <form name="fileInput">
+
+            {/* TODO: Implement in the backend */}
+            {/* <form name="fileInput">
                 <br />
                 <label className={"p-2 pr-4"} >Submit .xlsx (Microsoft Excel) File:</label>
 
                 <input type="file" id="fileInput" className={"border-2 p-1 hover:backdrop-brightness-125 active:backdrop-brightness-90"} 
                     accept=".xlsx" onChange={(e) => handleFileUpload(e, "csv")} 
                     data-tooltip-id="my-tooltip" data-tooltip-content="Upload an Excel file from your computer" />
-            </form>
+            </form> */}
 
             <br></br>
 
