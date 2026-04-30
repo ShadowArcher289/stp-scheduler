@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as API from '../SendToApi';
 import { section_data, student_data, teacher_data } from "../GetFromApi";
-import { getStudentName, getTeacherName } from "../HelperFunctions";
+import { getStudentById, getStudentName, getTeacherName } from "../HelperFunctions";
 
 interface EditStudentProps{
     scheduleSections: string[];
@@ -104,7 +104,6 @@ export default function EditStudent({scheduleSections}: EditStudentProps){
                         ...
                         </option>
                         {Object.entries(students).map(([key, student]) => {
-
                             return (
                                 <option key={key} className="mb-2 border-b border-white/50 text-black" value={student.id}>
                                     {student.name} | {student.id}   
@@ -137,6 +136,10 @@ export default function EditStudent({scheduleSections}: EditStudentProps){
                             data-tooltip-id="my-tooltip" data-tooltip-content="Select all sections student will be attending" 
                         >Sections (Click to collapse/expand)</summary>
                         {Object.entries(sections).map(([key, section]) => {
+                            // TODO: update so data is automatically filed out by students. 
+                            // if(students.indexOf(getStudentById(students, id)) == ){
+
+                            // }
                             return (
                                 <div key={key} className="mb-2 border-b border-white/50">
                                     <input type="checkbox" id={section.id} value={section.id} checked={sectionIds.includes(section.id)} className={"h-4 w-4 ml-8"} onChange={(e) => updateSections(e, e.currentTarget.value)}/>
